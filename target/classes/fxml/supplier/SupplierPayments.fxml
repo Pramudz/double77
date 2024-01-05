@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="634.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.supplierpayments.SupplierPaymentController">
+   <children>
+      <VBox prefHeight="370.0" prefWidth="1040.0">
+         <children>
+            <Pane prefHeight="195.0" prefWidth="1040.0">
+               <children>
+                  <Pane layoutX="14.0" layoutY="64.0" prefHeight="67.0" prefWidth="904.0">
+                     <children>
+                        <GridPane layoutX="5.0" layoutY="13.0" prefHeight="31.0" prefWidth="932.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="73.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="0.0" prefWidth="135.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="369.0" minWidth="0.0" prefWidth="66.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="0.0" prefWidth="96.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="0.0" prefWidth="151.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="396.0" minWidth="10.0" prefWidth="124.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="3.0" prefWidth="183.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="64.0" text="Supplier :" />
+                              <JFXTextField fx:id="supplierCodeField" onAction="#supCodFieldSetOnAction" prefHeight="31.0" prefWidth="68.0" GridPane.columnIndex="1" />
+                              <Label prefHeight="17.0" prefWidth="95.0" text="Total Returns :" GridPane.columnIndex="3" />
+                              <JFXTextField fx:id="totReturnField" editable="false" prefHeight="31.0" prefWidth="108.0" GridPane.columnIndex="4" />
+                              <Label prefHeight="31.0" prefWidth="126.0" text="Total Payable :" wrapText="true" GridPane.columnIndex="5">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <JFXTextField fx:id="totalPayableField" editable="false" prefHeight="34.0" prefWidth="153.0" GridPane.columnIndex="6" />
+                              <JFXButton onAction="#loadSupplierButtonClicked" prefHeight="33.0" prefWidth="38.0" text=" " GridPane.columnIndex="2">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="LIST" size="25" text="" wrappingWidth="23.0" />
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <Label fx:id="supNameLabel" layoutX="109.0" layoutY="148.0" prefHeight="27.0" prefWidth="332.0" styleClass="menu-vbox" />
+                  <Label layoutX="20.0" layoutY="155.0" prefHeight="18.0" prefWidth="85.0" text="Supplier Name :" />
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="-3.0" prefHeight="45.0" prefWidth="1040.0" styleClass="menu-vbox" text="Supplier Payments">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <JFXButton buttonType="RAISED" layoutX="496.0" layoutY="141.0" onAction="#viewHistoryJasper" prefHeight="39.0" prefWidth="150.0" styleClass="text-field-editable" text="View History " visible="false" />
+               </children>
+            </Pane>
+            <AnchorPane fx:id="anchor" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="115.0" prefWidth="909.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="207.0" layoutY="12.0" prefHeight="22.0" prefWidth="122.0" text="GRN/RON Number :" />
+                  <TextField fx:id="grnRonNumField" layoutX="190.0" layoutY="38.0" onAction="#grnRonNumFieldEnter" prefHeight="36.0" prefWidth="150.0" styleClass="left-product-vbox" />
+                  <Label alignment="CENTER" layoutX="436.0" layoutY="14.0" prefHeight="22.0" prefWidth="137.0" text="Document Raised Date :" />
+                  <TextField fx:id="documentDateField" editable="false" layoutX="429.0" layoutY="41.0" prefHeight="37.0" prefWidth="150.0" styleClass="menu-vbox" />
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="22.0" prefWidth="129.0" text="Document Type" />
+                  <HBox layoutX="909.0" prefHeight="114.0" prefWidth="129.0">
+                     <children>
+                        <VBox prefHeight="114.0" prefWidth="301.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#clearTextFields" prefHeight="37.0" prefWidth="168.0" styleClass="menu-buttons-selected" text="Clear">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="addDataButtonToTable" mnemonicParsing="false" onAction="#addPaymentMethod" prefHeight="39.0" prefWidth="166.0" styleClass="menu-buttons-selected" text="Add">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <JFXTextField layoutX="14.0" layoutY="85.0" prefHeight="25.0" prefWidth="585.0" promptText="Item Remarks" />
+                  <Label alignment="CENTER" layoutX="663.0" layoutY="12.0" prefHeight="22.0" prefWidth="129.0" text="GRN/RON Amount :" />
+                  <TextField fx:id="grnRonAmountField" editable="false" layoutX="650.0" layoutY="40.0" prefHeight="37.0" prefWidth="150.0" styleClass="menu-vbox" />
+                  <JFXButton layoutX="340.0" layoutY="42.0" onAction="#loadGrnRonClicked" prefHeight="33.0" prefWidth="38.0" text=" ">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="LIST" size="25" text="" wrappingWidth="23.0" />
+                     </graphic>
+                  </JFXButton>
+                  <ComboBox fx:id="docTypeCombo" layoutX="7.0" layoutY="38.0" prefHeight="35.0" prefWidth="134.0" styleClass="left-product-vbox" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <HBox prefHeight="220.0" prefWidth="1040.0">
+         <children>
+            <TableView fx:id="paymentTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="597.0">
+               <columns>
+                  <TableColumn fx:id="docTypeColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="132.0" text="Document Type" />
+                  <TableColumn fx:id="docRaisedDateCol" prefWidth="146.0" text="Document Raised Date" />
+                  <TableColumn fx:id="docNumColumn" minWidth="-Infinity" prefWidth="167.0" text="Document Num" />
+                  <TableColumn fx:id="amountCol" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Amount" />
+               </columns>
+            </TableView>
+            <GridPane prefHeight="217.0" prefWidth="302.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="138.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="161.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="109.0" text="Total Payment :" />
+                  <Label prefHeight="43.0" prefWidth="122.0" text="Total Outstanding After This Payment :" wrapText="true" GridPane.rowIndex="1" />
+                  <Label prefHeight="17.0" prefWidth="145.0" text="Payment Type :" GridPane.rowIndex="2" />
+                  <TextField fx:id="totPaymentField" editable="false" prefHeight="37.0" prefWidth="162.0" styleClass="menu-vbox" GridPane.columnIndex="1" />
+                  <TextField fx:id="outstandingField" editable="false" prefHeight="39.0" prefWidth="162.0" styleClass="menu-vbox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label prefHeight="17.0" prefWidth="145.0" text="Cheque No :" visible="false" GridPane.rowIndex="3" />
+                  <TextField fx:id="chequeNoField" editable="false" prefHeight="37.0" prefWidth="162.0" styleClass="left-product-vbox" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="payModeCombo" prefHeight="35.0" prefWidth="167.0" styleClass="left-product-vbox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </GridPane>
+         </children>
+      </HBox>
+      <VBox prefHeight="185.0" prefWidth="1040.0">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <GridPane layoutX="760.0" layoutY="15.0" prefHeight="79.0" prefWidth="277.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#savePaymentClicked" prefHeight="67.0" prefWidth="160.0" styleClass="menu-buttons-selected" text="Save">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#ClearAllFields" prefHeight="69.0" prefWidth="174.0" styleClass="menu-buttons-selected" text="Clear" GridPane.columnIndex="1">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <Button layoutX="9.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeItemFromTableView" prefHeight="27.0" prefWidth="129.0" styleClass="menu-buttons-selected" text="Remove  Payements">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+   <stylesheets>
+      <URL value="@../../styles/admin.css" />
+      <URL value="@../../styles/pos.css" />
+   </stylesheets>
+</VBox>

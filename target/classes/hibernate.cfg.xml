@@ -1,0 +1,62 @@
+<hibernate-configuration>
+	<session-factory>
+		<!-- JDBC Database connection settings -->
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		
+		<!-- below previous settings will be obtained through the dbConfig.properties -->
+		
+		<!--  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ubhardware?createDatabaseIfNotExist=true </property> -->
+		<!-- <property name="hibernate.connection.username">root</property> -->
+		<!-- The database password -->
+		<!-- <property name="hibernate.connection.password"></property> -->
+			
+		
+		<!-- JDBC connection pool settings ... using built-in test pool -->
+		<property name="hibernate.connection.pool_size">1</property>
+		<!-- Select our SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+		<!-- Echo the SQL to stdout -->
+		<property name="show_sql">true</property>
+		<!-- Set the current session context -->
+		<property name="current_session_context_class">thread</property>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+		<!-- dbcp connection pool configuration -->
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">300</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.idle_test_period">30</property>
+		<mapping class="invsys.entities.Products" />
+		<mapping class="invsys.entities.Category" />
+		<mapping class="invsys.entities.Supplier" />
+		<mapping class="invsys.entities.Users" />
+		<mapping class="invsys.entities.Role" />
+		<mapping class="invsys.entities.Sales" />
+		<mapping class="invsys.entities.PayModes" />
+		<mapping class="invsys.entities.PurchaseOrder" />
+		<mapping class="invsys.entities.OrderItems" />
+		<mapping class="invsys.entities.RoleFunctions"/>
+		<mapping class="invsys.entities.SalesDetails"/>
+		<mapping class="invsys.entities.Company"/>
+		<mapping class="invsys.entities.SupplierBrImages"/>
+		<mapping class="invsys.entities.GoodReceived"/>
+		<mapping class="invsys.entities.GoodReceivedDetails"/>
+		<mapping class="invsys.entities.CashRegister"/>	
+		<mapping class="invsys.entities.SupplierPayments"/>
+		<mapping class="invsys.entities.SupplierPaymentDetail"/>	
+		<mapping class="invsys.entities.SupplierReturn"/>	
+		<mapping class="invsys.entities.SupplierReturnDetail"/>	
+		<mapping class="invsys.entities.POSPayDetails"/>	
+		<mapping class="invsys.entities.Customer"/>	
+		<mapping class="invsys.entities.CreditInvoice"/>
+		<mapping class="invsys.entities.CreditInvoiceDetail"/>
+		<mapping class="invsys.entities.PriceUpdate"/>
+		<mapping class="invsys.entities.OverheadCategory"/>
+		<mapping class="invsys.entities.MonthlyOverheads"/>
+		<mapping class="invsys.entities.CustomerRefunds"/>
+		<mapping class="invsys.entities.CustomerRefundDetail"/>
+		<mapping class="invsys.entities.CreditInvoiceVoid"/>
+		<mapping class="invsys.entities.CreditInvoiceVoidDetail"/>
+	</session-factory>
+</hibernate-configuration>

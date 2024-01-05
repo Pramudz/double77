@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import org.controlsfx.control.CheckComboBox?>
+
+<AnchorPane prefHeight="232.0" prefWidth="508.0" stylesheets="@../../../styles/admin.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookShop.controllers.reports.monthendreports.MonthEndReportController">
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+   <children>
+      <JFXButton layoutX="169.0" layoutY="245.0" onAction="#viewReportClicked" prefHeight="28.0" prefWidth="144.0" styleClass="menu-buttons-selected" text="View" />
+      <JFXButton layoutX="342.0" layoutY="245.0" onAction="#ClearFields" prefHeight="28.0" prefWidth="144.0" styleClass="menu-buttons-selected" text="Clear" />
+      <JFXDatePicker fx:id="dateField" layoutX="27.0" layoutY="52.0" prefHeight="28.0" prefWidth="219.0" promptText="From Date :" />
+      <JFXDatePicker fx:id="toDateField" layoutX="263.0" layoutY="52.0" prefHeight="28.0" prefWidth="219.0" promptText="To Date :" />
+      <JFXComboBox fx:id="yearCombo" labelFloat="true" layoutX="30.0" layoutY="103.0" prefHeight="20.0" prefWidth="144.0" promptText="Year" />
+      <CheckComboBox fx:id="overheadCatCombo" layoutX="158.0" layoutY="166.0" prefHeight="28.0" prefWidth="176.0"/>
+      <Label fx:id="monthLabel" layoutX="221.0" layoutY="107.0" prefHeight="25.0" prefWidth="52.0" text="Month :" />
+      <Label fx:id="ocatLabel" layoutX="30.0" layoutY="168.0" prefHeight="25.0" prefWidth="128.0" text="Overhead Category :" />
+      <CheckComboBox fx:id="monthCombo" layoutX="268.0" layoutY="99.0" prefHeight="34.0" prefWidth="155.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.dashboard.DashBoardController">
+   <stylesheets>
+      <URL value="@../styles/pos.css" />
+      <URL value="@../styles/admin.css" />
+   </stylesheets>
+   <children>
+      <VBox prefHeight="337.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+         <children>
+            <LineChart fx:id="salesChart" minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="953.0" style="-fx-background-color: #2196F3;" title="Monthly Sales Chart" VBox.vgrow="ALWAYS">
+               <xAxis>
+                  <CategoryAxis fx:id="ixAxis" side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="syAxis" label="Revenue" side="LEFT" tickLabelFill="WHITE" />
+               </yAxis>
+            </LineChart>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="119.0" styleClass="card-01" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+               <children>
+                  <VBox prefHeight="131.0" prefWidth="296.0">
+                     <children>
+                        <Label fx:id="totDaySaleTitleLabel" alignment="CENTER" prefHeight="48.0" prefWidth="337.0" style="-fx-background-color: #2196F3;" text="Total Day Sales :" textFill="WHITE" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Ebrima Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalDaySaleLabel" alignment="CENTER" prefHeight="61.0" prefWidth="296.0" text="250000 Products">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <JFXButton contentDisplay="RIGHT" onAction="#totalDaysalesAction" prefHeight="10.0" prefWidth="337.0" text="More Info">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_RIGHT" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox prefHeight="131.0" prefWidth="296.0">
+                     <children>
+                        <Label fx:id="totDayInvoiceTitleLabel" alignment="CENTER" prefHeight="48.0" prefWidth="337.0" style="-fx-background-color: #2196F3;" text="Total Day Invoices Count :" textFill="WHITE">
+                           <font>
+                              <Font name="Ebrima Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalInvoicesLabel" alignment="CENTER" prefHeight="63.0" prefWidth="296.0" text="250000 Products">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <JFXButton contentDisplay="RIGHT" onAction="#totalDayInvoicesAction" prefHeight="10.0" prefWidth="337.0" text="More Info">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_RIGHT" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="230.0" styleClass="card-02" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+               <children>
+                  <Label alignment="CENTER" prefHeight="48.0" prefWidth="425.0" style="-fx-background-color: #FFC66C;" text="Top 10 Items of the Month" textFill="WHITE">
+                     <font>
+                        <Font name="Ebrima Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="topTenItemTableView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFC66C;">
+                    <columns>
+                      <TableColumn fx:id="itemNameColumn" prefWidth="234.0" text="Item Name :" />
+                      <TableColumn fx:id="salesQtyColumn" prefWidth="76.0" text="Sales Qty" />
+                        <TableColumn fx:id="salesValColumn" prefWidth="102.0" text="Sales Value" />
+                    </columns>
+                  </TableView>
+                  <JFXButton contentDisplay="RIGHT" onAction="#topItemAction" prefHeight="25.0" prefWidth="396.0" text="More Info">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_RIGHT" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="260.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="111.0" styleClass="card-03" HBox.hgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="131.0" prefWidth="296.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="48.0" prefWidth="337.0" style="-fx-background-color: #45B7AF;" text="Total Products Count :" textFill="WHITE">
+                           <font>
+                              <Font name="Ebrima Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="prdCountLabel" alignment="CENTER" prefHeight="60.0" prefWidth="373.0" text="250000 Products">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <JFXButton contentDisplay="RIGHT" onAction="#totalProdcutsAction" prefHeight="10.0" prefWidth="337.0" text="More Info">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_RIGHT" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox prefHeight="131.0" prefWidth="296.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="48.0" prefWidth="337.0" style="-fx-background-color: #45B7AF;" text="Out of Stock Products :" textFill="WHITE">
+                           <font>
+                              <Font name="Ebrima Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="outOfStockLabel" alignment="CENTER" prefHeight="67.0" prefWidth="373.0" text="250 Products">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <JFXButton contentDisplay="RIGHT" onAction="#outOfStockAction" prefHeight="15.0" prefWidth="373.0" text="More Info">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_RIGHT" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

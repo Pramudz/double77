@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+
+<AnchorPane prefHeight="446.0" prefWidth="502.0" stylesheets="@../../styles/admin.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.reports.categorywise.CategoryWiseReportController">
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+   <children>
+      <Label alignment="CENTER" layoutX="9.0" prefHeight="27.0" prefWidth="618.0" styleClass="logo-background" text="Category Wise Sales Report" textAlignment="CENTER" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <VBox layoutX="30.0" layoutY="59.0" prefHeight="374.0" prefWidth="466.0">
+         <children>
+            <GridPane prefHeight="337.0" prefWidth="466.0" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="267.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="284.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+                  <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="165.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="236.0" minHeight="0.0" prefHeight="92.0" />
+                  <RowConstraints maxHeight="236.0" minHeight="0.0" prefHeight="18.0" />
+                  <RowConstraints maxHeight="299.0" minHeight="8.0" prefHeight="42.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="299.0" minHeight="5.0" prefHeight="44.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="299.0" minHeight="10.0" prefHeight="52.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <Label prefHeight="17.0" prefWidth="106.0" text="From Date :" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="106.0" text="To Date :" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXDatePicker fx:id="fromDate" editable="false" prefHeight="32.0" prefWidth="355.0" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </JFXDatePicker>
+                  <JFXDatePicker fx:id="toDate" editable="false" prefHeight="32.0" prefWidth="331.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXButton onAction="#viewClicked" prefHeight="34.0" prefWidth="114.0" styleClass="control-background" text="View" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS" />
+                  <CheckBox fx:id="catWiseCheckBox" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Selected Category Wise :" GridPane.rowIndex="3">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </CheckBox>
+                  <CheckComboBox fx:id="catCheckCombo" disable="true" prefHeight="36.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="summaryRadio" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="97.0" text="Summary" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </RadioButton>
+                  <JFXButton onAction="#closeClicked" prefHeight="34.0" prefWidth="114.0" styleClass="control-background" text="Close" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                  <RadioButton fx:id="detailWiseRadio" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="112.0" text="Detail Item Wise" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin></RadioButton>
+                  <CheckBox fx:id="movementQtyChkBox" disable="true" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Movement Qty " GridPane.rowIndex="7">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </CheckBox>
+                  <ComboBox fx:id="reportConditionsCombo" disable="true" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="conditionedTextField" disable="true" prefHeight="32.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Separator prefWidth="200.0" GridPane.rowIndex="5" />
+                  <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label prefHeight="17.0" prefWidth="306.0" text="Filters For Item Wise Reports :" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="dateWiseChkBox" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Date Wise" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

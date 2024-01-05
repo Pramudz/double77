@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="305.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.customer.CustomerTableController">
+   <children>
+      <JFXTextField fx:id="searchTextField" alignment="CENTER" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="314.0" promptText="Search Document" />
+      <TableView fx:id="customerTableView" layoutX="3.0" layoutY="48.0" onKeyPressed="#keyEvenHandler" onMouseClicked="#mouseEventHandler" prefHeight="247.0" prefWidth="473.0">
+        <columns>
+          <TableColumn fx:id="customerNicCol" prefWidth="90.0" text="Nic/Passport" />
+          <TableColumn fx:id="firstNameCol" prefWidth="122.0" text="First name" />
+            <TableColumn fx:id="companyNameCol" prefWidth="129.0" text="comany Name" />
+            <TableColumn fx:id="custEmailCol" prefWidth="131.0" text="Email" />
+        </columns>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+</AnchorPane>

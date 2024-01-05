@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cashRegistrySignOff" pageWidth="612" pageHeight="396" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb16e889-a1fc-4412-bc2d-b74f7d5b2ff5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Testing Adapter"/>
+	<parameter name="totalCashSales" class="java.lang.Double"/>
+	<parameter name="userId" class="java.lang.Long"/>
+	<parameter name="registryDate" class="java.sql.Date"/>
+	<queryString language="SQL">
+		<![CDATA[select p.pay_mode, p.sub_pay_mode, case when p.pay_mode = 'cash' then sum(p.amount-s.balance) else sum(p.amount) end as value, c.opening_cash_balance, c.closingCashBalance, c.user_name ,c.registry_date 
+ from pos_pay_detail p inner join sales s on 
+ s.sales_date=p.sales_date and s.user_id=p.user_id and s.bill_no=p.bill_no 
+ inner join cash_register c on c.user_id=s.user_id and c.registry_date = p.sales_date
+  where s.cancel_status=false and p.sales_date =$P{registryDate} and p.user_id=$P{userId} group by p.sub_pay_mode]]>
+	</queryString>
+	<field name="pay_mode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="pay_mode"/>
+		<property name="com.jaspersoft.studio.field.label" value="pay_mode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pos_pay_detail"/>
+	</field>
+	<field name="sub_pay_mode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sub_pay_mode"/>
+		<property name="com.jaspersoft.studio.field.label" value="sub_pay_mode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pos_pay_detail"/>
+	</field>
+	<field name="value" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="value"/>
+		<property name="com.jaspersoft.studio.field.label" value="value"/>
+	</field>
+	<field name="opening_cash_balance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="opening_cash_balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="opening_cash_balance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cash_register"/>
+	</field>
+	<field name="closingCashBalance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="closingCashBalance"/>
+		<property name="com.jaspersoft.studio.field.label" value="closingCashBalance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cash_register"/>
+	</field>
+	<field name="user_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="user_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="user_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cash_register"/>
+	</field>
+	<field name="registry_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="registry_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="registry_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cash_register"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="11" width="574" height="99" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="707a10e0-d091-4bc4-a193-3cb079e55a9f"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="327" y="9" width="117" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="aebc7aaf-e4a8-458e-8290-9c44015620bf"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cashier Sign Off]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="7" width="223" height="82" forecolor="#000000" uuid="dd8f9806-64de-4805-8765-96322fe7922b"/>
+					<textElement>
+						<font size="12"/>
+						<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+					</textElement>
+					<text><![CDATA[Cash Drawer Summary
+UB Hardware]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="35" width="80" height="22" forecolor="#000000" uuid="44d699af-007d-41e0-8dfb-4603591fc0d1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<text><![CDATA[Cashier Name :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="396" y="35" width="72" height="21" forecolor="#000000" uuid="12eeb3b9-6ee0-49b4-a358-aca9d7666025"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{user_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="306" y="61" width="80" height="22" forecolor="#000000" uuid="3cfb3782-a96a-4e3a-b84c-7175810a1f4a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<text><![CDATA[Date of Registry :]]></text>
+				</staticText>
+				<textField pattern="MMM d, yyyy">
+					<reportElement x="397" y="61" width="72" height="21" forecolor="#000000" uuid="2db8942a-5d14-445a-aaa4-7b5c56f48bcf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{registry_date}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="473" y="2" width="100" height="30" uuid="f80be043-7586-4058-935e-e395abe8bca7"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<staticText>
+				<reportElement x="0" y="8" width="114" height="17" uuid="161c490e-b5dd-4725-85aa-cba6010dc44e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Opening Cash Balance :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="117" y="7" width="106" height="20" uuid="96349f5d-5173-4646-b1f6-ea8321737fab"/>
+				<textFieldExpression><![CDATA[$F{opening_cash_balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<staticText>
+				<reportElement x="0" y="0" width="192" height="21" uuid="9aff6d33-1dcc-4da1-a1f1-29262121fa0b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29601908-1d51-4660-aeb2-52c34092fc16"/>
+				</reportElement>
+				<text><![CDATA[pay_mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="0" width="190" height="21" uuid="a087b98d-58f7-4029-8110-368ed7ac86fe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21298c5a-f4e3-4cc8-a92a-deca9caab950"/>
+				</reportElement>
+				<text><![CDATA[sub_pay_mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="0" width="190" height="21" uuid="61827d8b-0270-4c34-9249-701804e5226b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87d69661-33e0-4fca-9062-4d7e1d9e0afa"/>
+				</reportElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="192" height="20" uuid="1c2320d9-26db-4478-99af-dc3952f75ce9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29601908-1d51-4660-aeb2-52c34092fc16"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{pay_mode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="0" width="190" height="20" uuid="1cca938c-936a-453e-ad58-03cd47feb7d5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21298c5a-f4e3-4cc8-a92a-deca9caab950"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sub_pay_mode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="0" width="190" height="20" uuid="00793231-0a2d-4b9e-a9fd-8d0f7689da52">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87d69661-33e0-4fca-9062-4d7e1d9e0afa"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="48" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<staticText>
+				<reportElement x="360" y="4" width="90" height="17" uuid="14a45762-42e3-489e-808b-a54ce2b5e613"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exess/Shortage :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="6" width="69" height="17" uuid="92400ae1-6c5e-4bad-be1b-b7b9e42c67d4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cash :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="6" width="114" height="17" uuid="837ae456-0262-4c9c-a6bf-e34e6e9692bf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Closing Cash :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="115" y="4" width="106" height="20" uuid="0781c45b-ad97-4b31-89db-a41973f050d4"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{closingCashBalance}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="260" y="4" width="106" height="20" uuid="dcd336ff-4f61-435e-aa0e-7e6430649cd1"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalCashSales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="457" y="3" width="106" height="20" uuid="1f18c466-4f36-4199-89af-740da4ea365b"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{closingCashBalance}-($P{totalCashSales}+$F{opening_cash_balance})]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="410" y="32" width="100" height="16" uuid="a9c86a14-36ea-415a-9a35-d09720c17d3d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="510" y="32" width="60" height="14" uuid="716c0216-518f-409a-9545-93c010015f1e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

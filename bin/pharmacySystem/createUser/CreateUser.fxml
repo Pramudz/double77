@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="458.0" prefWidth="547.0" styleClass="control-background" stylesheets="@../resources/Styles/admin.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.createUser.CreateUserController">
+   <children>
+      <VBox layoutX="66.0" layoutY="46.0" prefHeight="264.0" prefWidth="159.0" spacing="3.0" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="322.0" AnchorPane.topAnchor="46.0">
+         <children>
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="USER NAME                         :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="EMAIL                                   :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="USER CATEGORY                  :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CREATE PASSWORD             :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CONFIRM PASSWORD          :" textAlignment="JUSTIFY" />
+         </children>
+      </VBox>
+      <VBox layoutX="236.0" layoutY="42.0" prefHeight="264.0" prefWidth="248.0" spacing="4.0" AnchorPane.bottomAnchor="152.0" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="42.0">
+         <children>
+            <JFXTextField fx:id="userNameField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <JFXTextField fx:id="emailField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <JFXComboBox fx:id="userCategoryField" editable="true" prefHeight="41.0" prefWidth="315.0" />
+            <JFXPasswordField fx:id="createPasswordField" prefHeight="38.0" prefWidth="223.0" />
+            <JFXPasswordField fx:id="confirmPasswordField" prefHeight="38.0" prefWidth="223.0" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="23.0" layoutY="331.0" prefHeight="100.0" prefWidth="503.0" spacing="10.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="331.0">
+         <children>
+            <JFXButton onAction="#addButtonPressed" prefHeight="70.0" prefWidth="200.0" styleClass="menu-buttons-selected" text="Create User">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton onAction="#closeButton" prefHeight="70.0" prefWidth="200.0" styleClass="menu-buttons-selected" text="Cancel">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

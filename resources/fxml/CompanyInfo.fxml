@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.company.CompanyInfoController">
+   <children>
+      <Label layoutX="231.0" layoutY="21.0" prefHeight="30.0" prefWidth="191.0" style="-fx-text-fill: #2196F3;" text="Company Details :">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="634.0" prefWidth="210.0" style="-fx-background-color: #2196F3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="146.0" fitWidth="159.0" layoutX="27.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/window.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <JFXTextField fx:id="companyNameField" labelFloat="true" layoutX="255.0" layoutY="70.0" prefHeight="30.0" prefWidth="275.0" promptText=" *Company Name :" AnchorPane.leftAnchor="255.0" />
+      <JFXTextField fx:id="streetAddressField" labelFloat="true" layoutX="255.0" layoutY="144.0" prefHeight="30.0" prefWidth="275.0" promptText="*Street Address :" AnchorPane.leftAnchor="255.0" />
+      <JFXTextField fx:id="addrLineField" labelFloat="true" layoutX="598.0" layoutY="144.0" prefHeight="30.0" prefWidth="275.0" promptText="*Address Line : 01" AnchorPane.rightAnchor="167.0" />
+      <Separator layoutX="210.0" layoutY="128.0" prefHeight="0.0" prefWidth="831.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="-1.0" />
+      <JFXTextField fx:id="cityField" labelFloat="true" layoutX="255.0" layoutY="195.0" prefHeight="30.0" prefWidth="275.0" promptText="*City :" AnchorPane.leftAnchor="255.0" />
+      <JFXComboBox fx:id="provinceField" labelFloat="true" layoutX="598.0" layoutY="195.0" prefHeight="30.0" prefWidth="275.0" promptText="*State/Province :" AnchorPane.rightAnchor="167.0" />
+      <Separator layoutX="210.0" layoutY="260.0" prefHeight="0.0" prefWidth="831.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="-1.0" />
+      <JFXTextField fx:id="telNoField" labelFloat="true" layoutX="255.0" layoutY="279.0" prefHeight="30.0" prefWidth="275.0" promptText="*Telephone Number :" AnchorPane.leftAnchor="255.0" />
+      <JFXTextField fx:id="faxNoField" labelFloat="true" layoutX="598.0" layoutY="279.0" prefHeight="30.0" prefWidth="275.0" promptText="*Fax Number :" AnchorPane.rightAnchor="167.0" />
+      <JFXTextField fx:id="emailField" labelFloat="true" layoutX="255.0" layoutY="343.0" prefHeight="30.0" prefWidth="275.0" promptText="*Company Email :" AnchorPane.leftAnchor="255.0" />
+      <JFXTextField fx:id="regNoField" labelFloat="true" layoutX="598.0" layoutY="343.0" prefHeight="30.0" prefWidth="275.0" promptText="Company Reg No :" AnchorPane.rightAnchor="167.0" />
+      <Label layoutX="256.0" layoutY="404.0" prefHeight="27.0" prefWidth="101.0" text="Company Logo :" textAlignment="CENTER" AnchorPane.leftAnchor="256.0" />
+      <Pane layoutX="256.0" layoutY="445.0" prefHeight="184.0" prefWidth="181.0" style="-fx-border-color: #2196F3;">
+         <children>
+            <ImageView fx:id="imageViewLogo" fitHeight="154.0" fitWidth="172.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport></ImageView>
+            <JFXButton layoutX="120.0" layoutY="155.0" onAction="#removeImage" style="-fx-background-color: #2196F3;" text="Remove" textFill="WHITE" />
+         </children>
+      </Pane>
+      <JFXButton fx:id="addImageButton" contentDisplay="CENTER" layoutX="350.0" layoutY="403.0" onAction="#imageChooser" prefHeight="27.0" prefWidth="48.0" ripplerFill="WHITE" style="-fx-background-color: #2196F3;" text=" " AnchorPane.leftAnchor="350.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="FILE_IMAGE_ALT" size="20" wrappingWidth="21.428571701049805" />
+         </graphic>
+      </JFXButton>
+      <HBox alignment="CENTER_LEFT" layoutX="626.0" layoutY="537.0" prefHeight="72.0" prefWidth="323.0" spacing="20.0" AnchorPane.rightAnchor="91.0">
+         <children>
+            <JFXButton fx:id="saveButton" onAction="#saveClicked" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: #2196F3;" text="Save" textFill="WHITE">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton onAction="#clearClicked" prefHeight="52.0" prefWidth="142.0" style="-fx-background-color: #2196F3;" text="Clear" textFill="WHITE">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+      </HBox>
+      <JFXButton layoutX="885.0" layoutY="24.0" onAction="#updateLatestCompanyData" style="-fx-background-color: #2196F3;" text="load Company Info" textFill="WHITE" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="634.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.purchaseOrder.PurchaseOrderController">
+   <stylesheets>
+      <URL value="@../Styles/login.css" />
+      <URL value="@../Styles/admin.css" />
+   </stylesheets>
+   <children>
+      <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+         <stylesheets>
+            <URL value="@../Styles/login.css" />
+            <URL value="@../Styles/admin.css" />
+         </stylesheets>
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="97.0" prefWidth="525.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="58.0" text="Supplier :" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="supCodeField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="239.0" styleClass="textFill" HBox.hgrow="ALWAYS" />
+                                    <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#loadSupplierTable" prefHeight="25.0" prefWidth="33.0" text=" " textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="LIST" size="25" text="" wrappingWidth="31.0" />
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton buttonType="RAISED" onAction="#loadItemTable" prefHeight="25.0" prefWidth="86.0" styleClass="menu-buttons-selected" text="Load Data" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets right="20.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="475.0">
+                           <children>
+                              <Label fx:id="supDescLabel" prefHeight="28.0" prefWidth="408.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="97.0" prefWidth="616.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="97.0" prefWidth="616.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="60.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label prefHeight="22.0" prefWidth="90.0" text="Item Code" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefHeight="22.0" prefWidth="123.0" text="Item Desc" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefHeight="22.0" prefWidth="70.0" text="Price" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefHeight="22.0" prefWidth="33.0" text="Qty" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="97.0" prefWidth="616.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="7.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <JFXTextField fx:id="itemCodeField" minHeight="-Infinity" minWidth="-Infinity" onAction="#codeFieldEnter" prefHeight="25.0" prefWidth="104.0" styleClass="textFill" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="itemDescField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="244.0" styleClass="textFill" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="priceField" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="108.0" styleClass="textFill" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="qtyField" minHeight="-Infinity" minWidth="-Infinity" onAction="#addButtonClicked" prefHeight="25.0" prefWidth="73.0" styleClass="textFill" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_RIGHT" prefHeight="97.0" prefWidth="616.0">
+                           <children>
+                              <JFXButton onAction="#addButtonClicked" prefHeight="40.0" prefWidth="121.0" styleClass="menu-buttons-selected" text="Add" />
+                           </children>
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="734.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+         <stylesheets>
+            <URL value="@../Styles/login.css" />
+            <URL value="@../Styles/admin.css" />
+         </stylesheets>
+         <children>
+            <HBox prefHeight="307.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="307.0" prefWidth="593.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="86.0" prefWidth="503.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <JFXTextField fx:id="thisSearchTextField" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchItems" prefHeight="30.0" prefWidth="503.0" promptText="Search Item" styleClass="text-field">
+                                 <padding>
+                                    <Insets right="10.0" top="10.0" />
+                                 </padding>
+                              </JFXTextField>
+                              <TableView fx:id="loadTableView" prefHeight="215.0" prefWidth="513.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="loadItemCodeCol" prefWidth="63.0" text="Code" />
+                                    <TableColumn fx:id="loadItemDescCol" prefWidth="189.0" text="Item Description" />
+                                    <TableColumn fx:id="loadOnHQtry" minWidth="0.0" prefWidth="58.0" text="Qty" />
+                                    <TableColumn fx:id="loadCostPriceCol" maxWidth="124.0" minWidth="-1.0" prefWidth="92.0" text="Cost Price" />
+                                    <TableColumn fx:id="loadActionCol" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="110.0" text="Action" />
+                                 </columns>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </TableView>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="307.0" prefWidth="608.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="546.0" prefWidth="528.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TableView fx:id="orderTableView" onKeyReleased="#keyEventHandling" prefHeight="273.0" prefWidth="506.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="orderITemCodeCol" prefWidth="52.0" text="Code" />
+                                    <TableColumn fx:id="orderItemDescCol" prefWidth="188.0" text="Item Description" />
+                                    <TableColumn fx:id="orderQtyCol" onEditCommit="#qtyCellClicke" prefWidth="78.0" text="Qty" />
+                                    <TableColumn fx:id="orderPriceCol" prefWidth="91.0" text="Price" />
+                                    <TableColumn fx:id="orderValueCol" prefWidth="118.0" text="Value" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="307.0" prefWidth="608.0">
+                           <children>
+                              <JFXButton onAction="#removeItemFromOrderAction" prefHeight="25.0" prefWidth="101.0" styleClass="menu-buttons-selected" text="Remove Item" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="5.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="634.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+         <stylesheets>
+            <URL value="@../Styles/login.css" />
+            <URL value="@../Styles/admin.css" />
+         </stylesheets>
+         <children>
+            <HBox prefHeight="221.0" prefWidth="1040.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="221.0" prefWidth="1040.0">
+                     <children>
+                        <VBox prefHeight="219.0" prefWidth="526.0" spacing="5.0">
+                           <children>
+                              <VBox prefHeight="157.0" prefWidth="520.0" spacing="5.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="91.0" text="Validity Period :" textAlignment="CENTER" />
+                                    <JFXTextField maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefColumnCount="10" prefHeight="33.0" prefWidth="142.0" styleClass="textFill" VBox.vgrow="ALWAYS" />
+                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="91.0" text="Remarks         :" textAlignment="CENTER" />
+                                    <TextArea prefHeight="38.0" prefWidth="372.0" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="62.0" prefWidth="520.0" />
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="221.0" prefWidth="1040.0">
+                     <children>
+                        <HBox prefHeight="221.0" prefWidth="1040.0" />
+                        <HBox prefHeight="221.0" prefWidth="1040.0">
+                           <children>
+                              <VBox prefHeight="219.0" prefWidth="268.0">
+                                 <children>
+                                    <VBox prefHeight="289.0" prefWidth="260.0">
+                                       <children>
+                                          <GridPane prefHeight="223.0" prefWidth="267.0" VBox.vgrow="ALWAYS">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="74.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="10.0" prefWidth="186.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="140.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="27.0" prefWidth="83.0" text="No of Items" textAlignment="CENTER" />
+                                                <Label alignment="CENTER" prefHeight="27.0" prefWidth="83.0" text="Sum of Qty" textAlignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label alignment="CENTER" prefHeight="27.0" prefWidth="83.0" text="Total Amount" textAlignment="CENTER" GridPane.rowIndex="2" />
+                                                <TextField fx:id="itemCountField" editable="false" minHeight="-Infinity" prefHeight="38.0" prefWidth="106.0" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets right="80.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="sumOfQtyField" editable="false" minHeight="-Infinity" prefHeight="35.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets right="50.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="sumOfValueField" editable="false" minHeight="-Infinity" prefHeight="66.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" right="5.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="281.0">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <JFXButton onAction="#clearData" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Clear Data">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXButton onAction="#viewReport" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="SAVE &amp; PRINT" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

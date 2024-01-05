@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pos_bill_reprint-with-cus" pageWidth="612" pageHeight="396" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27bc771b-7673-48dc-b011-ee48d3eae09f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="471"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="524"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="streetAddress" class="java.lang.String"/>
+	<parameter name="addressLine" class="java.lang.String"/>
+	<parameter name="city" class="java.lang.String"/>
+	<parameter name="telephoneNum" class="java.lang.String"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="billNo" class="java.lang.Long"/>
+	<parameter name="date" class="java.sql.Date"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<parameter name="printedBy" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select s_mass.bill_no as billNo, s_mass.sales_date as salesDate , u.user_name as userName, cus.first_name as customerFname , cus.telephone as customerTel , cus.company_name as customerCompanyName,
+s_det.seq_no as seqNo , prd.prd_id as prdId, prd.p_name as prdName , s_det.unit_price as unitPrice, s_det.sales_qty as salesQty , s_det.gross_item_amount as itemGrossAmount,
+s_det.discount_percentage as discountPercentage , s_det.item_net_amount as itemNetAmount, s_det.item_cancel_status as itemCancelStatus , s_mass.balance as balance
+from sales s_mass inner join sales_detail s_det on s_det.bill_no=s_mass.bill_no and s_det.sales_date=s_mass.sales_date and s_det.user_id=s_mass.user_id
+inner join users u on u.user_id=s_mass.user_id inner join products prd on prd.prd_id=s_det.product_id inner join customer cus on cus.customer_id=s_mass.customerId where s_mass.cancel_status=false and u.user_name=$P{userName}
+and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;]]>
+	</queryString>
+	<field name="billNo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="bill_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="billNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
+	</field>
+	<field name="salesDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="sales_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
+	</field>
+	<field name="userName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="user_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="userName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="users"/>
+	</field>
+	<field name="customerFname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customerFname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="customerTel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telephone"/>
+		<property name="com.jaspersoft.studio.field.label" value="customerTel"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="customerCompanyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="company_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customerCompanyName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="seqNo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="seq_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="seqNo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="prdId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="prd_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="prdId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
+	</field>
+	<field name="prdName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="p_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="prdName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
+	</field>
+	<field name="unitPrice" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="unit_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="unitPrice"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="salesQty" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="sales_qty"/>
+		<property name="com.jaspersoft.studio.field.label" value="salesQty"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="itemGrossAmount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="gross_item_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="itemGrossAmount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="discountPercentage" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="discount_percentage"/>
+		<property name="com.jaspersoft.studio.field.label" value="discountPercentage"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="itemNetAmount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="item_net_amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="itemNetAmount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="itemCancelStatus" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="item_cancel_status"/>
+		<property name="com.jaspersoft.studio.field.label" value="itemCancelStatus"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
+	</field>
+	<field name="balance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="balance"/>
+		<property name="com.jaspersoft.studio.field.label" value="balance"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="totalDiscount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{itemGrossAmount}-$F{itemNetAmount}]]></variableExpression>
+	</variable>
+	<variable name="totalGrossAmount" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{itemCancelStatus} == true ? 0 : $F{itemGrossAmount})]]></variableExpression>
+	</variable>
+	<variable name="totalNetValue" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{itemCancelStatus} == true ? 0 : $F{itemNetAmount})]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupFooter>
+			<band>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="112">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="0" width="574" height="107" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="a05e540e-ce97-4fab-bae1-bc48006e0fa6"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement x="21" y="1" width="169" height="20" uuid="f680c178-c8bc-4919-ba1e-54b2789989bb">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="21" width="169" height="20" uuid="015a9d92-d5ac-4e86-8625-bd75c8dcd568">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{streetAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="42" width="169" height="20" uuid="5181a71f-cb1a-4a54-adc4-1045bc899325">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{addressLine}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="64" width="169" height="20" uuid="298474e7-a877-485c-89d2-7b1a5b91dce8">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{city}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="85" width="132" height="20" uuid="0150652a-c0ef-47a0-8c12-69b96f26e28d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{telephoneNum}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="86" width="37" height="20" uuid="63914fd1-1064-4fc7-ba49-257dc95ec07c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Tel :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="202" y="85" width="42" height="22" forecolor="#000000" uuid="1cde741b-c8c2-4f3d-a625-76e1b0bb264e">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<text><![CDATA[Date :]]></text>
+				</staticText>
+				<textField pattern="MMMM d, yyyy">
+					<reportElement x="245" y="85" width="91" height="22" uuid="9bf5c25d-16e5-4113-bdb1-bed7029c2cb7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="344" y="85" width="54" height="22" forecolor="#000000" uuid="5d368f38-d4f0-4dea-a649-4e654cde96fb">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<text><![CDATA[Bill No :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="398" y="85" width="55" height="22" uuid="4cf21e3e-63b6-49fe-be0d-46a1b779675b">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{billNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="461" y="85" width="50" height="22" forecolor="#000000" uuid="0bdec652-743f-4bd2-b4f0-66ffc18685cb">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<text><![CDATA[Cashier:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="511" y="85" width="60" height="22" uuid="a3dc4479-dfc7-409b-9c25-387ee4ee3d13">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Courier New" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{userName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="381" y="51" width="169" height="20" uuid="2600d74a-c8a4-4fc7-af26-3cdbfafcd2a1">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{customerCompanyName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="381" y="30" width="169" height="20" uuid="41bceee6-7fca-4055-912c-0aa4796a9963">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{customerTel}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="381" y="10" width="169" height="20" uuid="4970b11b-cb85-45e6-8a1a-05ff17d43c69">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{customerFname}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="328" y="50" width="53" height="20" forecolor="#000000" uuid="a750db85-0495-4a9a-996d-f6916a7627a7">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Vehi #:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="328" y="30" width="53" height="20" forecolor="#000000" uuid="15387aef-d5b6-4d73-859c-bf69cb7edb20">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Cus Tel :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="328" y="10" width="53" height="20" forecolor="#000000" uuid="83327ad7-e544-45ed-804e-6fd506db44d5">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Courier New" size="10"/>
+					</textElement>
+					<text><![CDATA[Cust Name :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="210" y="1" width="94" height="22" forecolor="#000000" backcolor="#FFFFFF" uuid="0a0ccd3e-8121-4646-822f-c700e6308d29"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Sales Receipt]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="612" height="1" forecolor="#666666" uuid="888fb298-0cd3-4290-af93-0fa866caf949"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="30" height="20" forecolor="#000000" uuid="45d09904-8acc-45a8-a783-dbbac0463143"/>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[S/NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="338" y="0" width="75" height="20" forecolor="#000000" uuid="4662cd87-9f6d-4d54-b93e-19bb4522c89f"/>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Gross Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="34" height="20" forecolor="#000000" uuid="ef308af5-3b16-4aab-aa42-976f809e38ad"/>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Dis%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="0" width="60" height="20" forecolor="#000000" uuid="6b59eab0-a7fa-4bd4-a969-23e0d960cc93"/>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Item Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="90" y="0" width="148" height="20" forecolor="#000000" uuid="017cde37-516a-469f-afe7-f0916b037bb3"/>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Item Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="239" y="0" width="61" height="20" forecolor="#000000" uuid="9073207d-a675-4047-a5dc-6027434bd606"/>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="90" height="20" forecolor="#000000" uuid="8683fe2e-c55c-4bab-a0dc-2d529be1f2ef"/>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Net Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="38" height="20" forecolor="#000000" uuid="ece58673-80f1-4270-bd4d-af4175ef483a"/>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="0" width="40" height="20" forecolor="#000000" uuid="b046f2e1-6e56-40b1-9dd6-8b5152b6006c"/>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="30" height="20" uuid="d4f2a0ed-a36a-457f-8db0-a130e197bb64">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{seqNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="0" width="60" height="20" uuid="5ba0a176-a85f-45a5-a7de-ed5a2ebb430a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prdId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="148" height="20" uuid="4017e7fd-f5c1-47fb-a702-7330672e0b4f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prdName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="239" y="0" width="61" height="20" uuid="cfde197e-cac9-4ebc-83e6-6c98702eda24">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unitPrice}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="338" y="0" width="75" height="20" uuid="4402bc44-57dd-4b19-91f4-1ce2b615a89c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{itemCancelStatus} == true ? 0 : $F{itemGrossAmount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="34" height="20" uuid="cdd69029-02a5-47b1-b19e-2566d760a2ee">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discountPercentage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="450" y="0" width="90" height="20" uuid="9a47103a-acc9-467d-a48a-94707b802281">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{itemCancelStatus} == true ? 0 : $F{itemNetAmount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="38" height="20" uuid="3041dce5-55a8-478f-b774-1ceadcfe1c87">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesQty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="540" y="0" width="40" height="20" uuid="62a0b9fa-adab-4834-95e2-dcafc55599e7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{itemCancelStatus} == true ? "Cancel" : "Active")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="31">
+			<textField>
+				<reportElement mode="Opaque" x="5" y="18" width="556" height="13" backcolor="#E6E6E6" uuid="3b2691e7-81ac-4808-b418-5c15a68124a2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="521" y="18" width="40" height="13" backcolor="#E6E6E6" uuid="434673d9-36ee-438b-9cee-2de96c5b1399"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="5" y="18" width="141" height="13" uuid="0b17dc25-922a-4d52-9a5e-e02e72365913"/>
+				<textElement>
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="22" y="2" width="78" height="12" forecolor="#000000" uuid="f73e0875-d2bb-407f-a84d-16821a092e0f"/>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Printed By :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="106" y="2" width="148" height="15" uuid="af89b183-5262-491e-aa29-85fbc88ad951">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{printedBy}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="93">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="350" y="4" width="113" height="16" uuid="d460bfc2-5f45-47bd-9ec5-4e89c01f2acb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Total Discount Rs:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(#,##0.00#)">
+				<reportElement x="464" y="4" width="106" height="16" uuid="d7c69a31-6f99-4c19-81e1-859b57beb3ca">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalDiscount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="464" y="22" width="106" height="16" uuid="4d36c7e8-0947-432f-a580-5d384db45c1a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalGrossAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="22" width="113" height="16" uuid="00c2b29e-b80e-469b-9712-920cfec85eb2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Gross Amount Rs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="41" width="113" height="16" uuid="978546cf-e6cd-4c38-aa37-74ea6e1bd65e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Bill Value Rs:]]></text>
+			</staticText>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="464" y="41" width="106" height="16" uuid="129f89e9-434c-4e8f-a689-1a7cca672256">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalNetValue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="59" width="113" height="16" uuid="be059148-4922-4816-a7ae-5f16f6e90006">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Net Value Rs :]]></text>
+			</staticText>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="464" y="59" width="106" height="16" uuid="995d9efd-6032-4af0-8f89-731a23c7a242">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalNetValue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="77" width="113" height="16" uuid="469d885c-c38a-4a40-8bd4-de978e199751">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Change Rs:]]></text>
+			</staticText>
+			<textField pattern="#,##0.###;(#,##0.###)">
+				<reportElement x="464" y="77" width="106" height="16" uuid="2e538206-6233-4557-a6a7-26cc55eea1d5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="338" height="70" uuid="69e7b7b5-32e3-4440-b842-2033f27c28f5">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<subreportParameter name="userName">
+					<subreportParameterExpression><![CDATA[$F{userName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="billNo">
+					<subreportParameterExpression><![CDATA[$F{billNo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="salesDate">
+					<subreportParameterExpression><![CDATA[$F{salesDate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["PosPaySubreportRePrint.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

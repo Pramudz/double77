@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="546.0" prefWidth="606.0" styleClass="control-background" stylesheets="@../resources/Styles/admin.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.userSettings.UserSettingController">
+   <children>
+      <VBox layoutX="43.0" layoutY="35.0" prefHeight="333.0" prefWidth="168.0" spacing="4.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="395.0" AnchorPane.topAnchor="35.0">
+         <children>
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="USER NAME                         :" textAlignment="JUSTIFY" />
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CURRENT EMAIL                  :" textAlignment="JUSTIFY" />
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="NEW EMAIL                          :" textAlignment="JUSTIFY" />
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CURRENT PASSWORD          :" textAlignment="JUSTIFY" />
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="NEW PASSWORD                  :" textAlignment="JUSTIFY" />
+            <Label alignment="BOTTOM_LEFT" prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CONFIRM PASSWORD          :" textAlignment="JUSTIFY" />
+         </children>
+      </VBox>
+      <VBox layoutX="242.0" layoutY="37.0" prefHeight="333.0" prefWidth="322.0" spacing="3.0" AnchorPane.bottomAnchor="176.0" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="37.0">
+         <children>
+            <JFXTextField fx:id="userNameField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" styleClass="textFill" />
+            <JFXTextField fx:id="currentEmailField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" styleClass="textFill" />
+            <JFXTextField fx:id="newEmailField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" styleClass="textFill" />
+            <JFXPasswordField fx:id="currentPasswordField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" />
+            <JFXPasswordField fx:id="newPasswordField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" />
+            <JFXPasswordField fx:id="confirmPassowrdField" prefHeight="40.0" prefWidth="10.0" style="-fx-text-fill: black;" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="372.0" prefHeight="179.0" prefWidth="612.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="372.0">
+         <children>
+            <JFXButton onAction="#updatePressed" prefHeight="74.0" prefWidth="212.0" styleClass="menu-buttons-selected" text="Update">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton prefHeight="74.0" prefWidth="212.0" styleClass="menu-buttons-selected" text="Cancel">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

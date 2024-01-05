@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="560.0" prefWidth="575.0" stylesheets="@../styles/Products.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.overhead.OverheadController">
+   <children>
+      <VBox prefHeight="53.0" prefWidth="575.0" style="-fx-background-color: #2196F3;" VBox.vgrow="ALWAYS">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Monthly Overheads Entry" textAlignment="CENTER" wrappingWidth="574.13671875">
+               <font>
+                  <Font name="System Bold" size="34.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <VBox>
+         <children>
+            <HBox prefHeight="42.0" prefWidth="575.0">
+               <children>
+                  <CheckBox fx:id="createNewCheckBox" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="29.0" prefWidth="184.0" text="Create Over head Category :" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="450.0" prefWidth="555.0">
+         <children>
+            <VBox prefHeight="66.0" prefWidth="415.0" styleClass="pane-user">
+               <children>
+                  <Pane prefHeight="79.0" prefWidth="415.0">
+                     <children>
+                        <Label layoutX="3.0" layoutY="23.0" prefHeight="27.0" prefWidth="118.0" text="New Category :" textAlignment="CENTER" />
+                        <TextField fx:id="newOHeadCatField" disable="true" layoutX="126.0" layoutY="18.0" prefHeight="35.0" prefWidth="161.0" styleClass="itext-field" />
+                        <JFXButton fx:id="createNewOverheadButton" disable="true" layoutX="309.0" layoutY="18.0" onAction="#createNewOheadClicked" prefHeight="35.0" prefWidth="83.0" styleClass="menu-buttons-selected" text="Create" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="42.0" prefWidth="555.0">
+               <children>
+                  <JFXRadioButton fx:id="addEntryRadio" layoutX="14.0" layoutY="13.0" prefHeight="17.0" prefWidth="118.0" text="Add Entry" AnchorPane.leftAnchor="14.0" />
+                  <JFXRadioButton fx:id="updateEntryRadio" layoutX="132.0" layoutY="13.0" prefHeight="17.0" prefWidth="118.0" text="Update Entry " AnchorPane.leftAnchor="132.0" />
+                  <JFXButton fx:id="showButton" alignment="CENTER" buttonType="RAISED" layoutX="309.0" layoutY="9.0" onAction="#showExistingValue" prefHeight="26.0" prefWidth="161.0" styleClass="control-background" text="Show Existing Amount " AnchorPane.rightAnchor="85.0" />
+               </children>
+            </AnchorPane>
+            <GridPane prefHeight="255.0" prefWidth="435.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="74.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="186.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <JFXComboBox fx:id="overheadCatCombo" editable="true" prefHeight="34.0" prefWidth="219.0" styleClass="itext-field" unFocusColor="#432e2e" GridPane.columnIndex="1" />
+                  <JFXComboBox fx:id="yearCombo" editable="true" prefHeight="35.0" prefWidth="221.0" styleClass="itext-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="amountField" prefHeight="35.0" prefWidth="198.0" styleClass="itext-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="206.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label prefHeight="27.0" prefWidth="83.0" text="Month" textAlignment="CENTER" GridPane.rowIndex="2" />
+                  <Label prefHeight="27.0" prefWidth="83.0" text="Amount :" textAlignment="CENTER" GridPane.rowIndex="3" />
+                  <Label prefHeight="27.0" prefWidth="118.0" text="Overhead Category" textAlignment="CENTER" />
+                  <Label prefHeight="27.0" prefWidth="83.0" text="Year" textAlignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXButton alignment="CENTER" buttonType="RAISED" onAction="#syncOverheadCategories" prefHeight="26.0" prefWidth="45.0" styleClass="control-background" text="Sync" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                  <JFXComboBox fx:id="monthCombo" editable="true" prefHeight="35.0" prefWidth="221.0" styleClass="itext-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+            <Pane prefHeight="75.0" prefWidth="555.0">
+               <children>
+                  <JFXButton fx:id="saveButton" layoutX="311.0" layoutY="20.0" onAction="#insertOverheadClicked" prefHeight="45.0" prefWidth="100.0" styleClass="menu-buttons-selected" text="Save" />
+                  <JFXButton layoutX="425.0" layoutY="20.0" onAction="#clearButtonClicked" prefHeight="45.0" prefWidth="95.0" styleClass="menu-buttons-selected" text="Clear" />
+                  <JFXButton fx:id="updateButton" layoutX="196.0" layoutY="20.0" onAction="#updateOverheadClicked" prefHeight="45.0" prefWidth="100.0" styleClass="menu-buttons-selected" text="Update" />
+               </children>
+            </Pane>
+         </children>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
+      </VBox>
+   </children>
+</VBox>

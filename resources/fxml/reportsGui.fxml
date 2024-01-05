@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTreeView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="634.0" prefWidth="1040.0" stylesheets="@../styles/Products.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.reports.ReportController">
+   <children>
+      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="1040.0" styleClass="sidebar-menu" VBox.vgrow="ALWAYS">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="Reports" textAlignment="CENTER" wrappingWidth="348.13671875">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="582.0" prefWidth="1040.0">
+         <children>
+            <JFXTreeView fx:id="treeView" onContextMenuRequested="#treeItemAction" onMouseClicked="#treeItemAction" prefHeight="618.0" prefWidth="1040.0" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

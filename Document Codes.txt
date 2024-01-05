@@ -1,0 +1,4 @@
+POS	Point of Sales
+GRN	Good Received Notes
+RON	Return Out Note
+CRDN	Credit Invoice

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2019-05-26T19:26:28 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrderReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="27bc771b-7673-48dc-b011-ee48d3eae09f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="supplierName" class="java.lang.String"/>
+	<parameter name="orderDate" class="java.sql.Date"/>
+	<parameter name="orderNo" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="itemDesc" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Integer"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="amount" class="java.lang.Double"/>
+	<variable name="Summery" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupFooter>
+			<band height="26">
+				<staticText>
+					<reportElement x="291" y="1" width="120" height="22" uuid="a3a4847a-66ce-446d-a7d0-40702f8000b4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="440" y="4" width="115" height="22" uuid="25c16b7d-2b1c-4f60-a6ab-a5ff6d226709"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Summery}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="140">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="152" backcolor="#FFFFFF" uuid="a05e540e-ce97-4fab-bae1-bc48006e0fa6"/>
+				<staticText>
+					<reportElement x="294" y="10" width="275" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="9e3f3fad-db70-4b08-adce-ea23f61510bd"/>
+					<textElement>
+						<font size="27" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ PURCHASE ORDER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="15" width="191" height="132" uuid="1d42169b-42f3-4aa3-b9ea-f0eed966203a"/>
+					<textElement>
+						<font size="18"/>
+						<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+					</textElement>
+					<text><![CDATA[ABC Private Ltd
+No 336, B Kudabuthgamuwa,
+Angoda.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="56" width="80" height="22" uuid="b9cc0e73-3803-4c10-889b-e0cb0518a437"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<text><![CDATA[Order No]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="407" y="57" width="72" height="21" uuid="9366cb96-5db2-4dd8-ba15-4d56e721dc48"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{orderNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="314" y="90" width="80" height="22" uuid="22f44b3d-24f7-478a-b707-d9835e8437ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<text><![CDATA[Order Date]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="406" y="91" width="72" height="21" uuid="f1e23465-d6d2-4f5c-9b72-124437a1821f"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{orderDate}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="124">
+			<staticText>
+				<reportElement x="360" y="32" width="195" height="80" uuid="79ef1383-c151-471b-9178-4914db0ff24c"/>
+				<textElement>
+					<font size="14"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[ABC Private Ltd
+No 336, B Kudabuthgamuwa,
+Angoda.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="7" y="1" width="70" height="29" forecolor="#FFFFFF" backcolor="#1821D9" uuid="6b378798-6fd1-4733-86a1-b508368325e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Vender :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="362" y="2" width="100" height="29" forecolor="#FFFFFF" backcolor="#1821D9" uuid="1ec074db-217e-4f61-bc19-d59359aaeb68"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ship To :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="240" height="30" uuid="9a84a0d1-927d-48eb-81f0-eb38e876edc5"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{supplierName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="888fb298-0cd3-4290-af93-0fa866caf949"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#000000" uuid="45d09904-8acc-45a8-a783-dbbac0463143"/>
+				<text><![CDATA[Item Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="80" height="20" forecolor="#000000" uuid="4662cd87-9f6d-4d54-b93e-19bb4522c89f"/>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="0" width="180" height="20" forecolor="#000000" uuid="bbb2782b-dad7-4e95-89a7-345fec3db269"/>
+				<text><![CDATA[Item Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="0" width="72" height="20" forecolor="#000000" uuid="480e718c-9c1a-4253-9e29-9b8afe46ddd4"/>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="0" width="80" height="20" forecolor="#000000" uuid="ef308af5-3b16-4aab-aa42-976f809e38ad"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="-2" y="1" width="72" height="18" uuid="d4f2a0ed-a36a-457f-8db0-a130e197bb64"/>
+				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="180" height="18" uuid="68d3a6e2-30a7-412c-b978-e97608310e3c"/>
+				<textFieldExpression><![CDATA[$F{itemDesc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="367" y="2" width="83" height="18" uuid="7cf43f3c-5e8e-4594-9305-0e92d35d2d25"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="2" width="72" height="18" uuid="f33d6424-a623-4667-b53d-5c7dd069e3ed"/>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="2" width="83" height="18" uuid="7e9dbd24-9651-4fc4-b709-44f196108809"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="26">
+			<staticText>
+				<reportElement x="291" y="1" width="120" height="22" uuid="9033bf51-ce11-4898-ab71-3f7f31c24d48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="4" width="115" height="22" uuid="e02008d5-cc6b-4843-9338-34be5b056461"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Summery}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="23">
+			<textField>
+				<reportElement mode="Opaque" x="5" y="0" width="515" height="23" backcolor="#E6E6E6" uuid="3b2691e7-81ac-4808-b418-5c15a68124a2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="521" y="0" width="40" height="23" backcolor="#E6E6E6" uuid="434673d9-36ee-438b-9cee-2de96c5b1399"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="5" y="10" width="100" height="13" uuid="0b17dc25-922a-4d52-9a5e-e02e72365913"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

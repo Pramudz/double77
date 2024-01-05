@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import org.controlsfx.control.CheckComboBox?>
+
+<AnchorPane prefHeight="232.0" prefWidth="508.0" stylesheets="@../../../styles/admin.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invsys.controllers.reports.supplierrelated.SupplierRelatedReportController">
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+   <children>
+      <JFXButton layoutX="169.0" layoutY="245.0" onAction="#viewReportClicked" prefHeight="28.0" prefWidth="144.0" styleClass="menu-buttons-selected" text="View" />
+      <JFXButton layoutX="342.0" layoutY="245.0" onAction="#ClearFields" prefHeight="28.0" prefWidth="144.0" styleClass="menu-buttons-selected" text="Clear" />
+      <JFXDatePicker fx:id="dateField" layoutX="27.0" layoutY="77.0" prefHeight="28.0" prefWidth="219.0" promptText="From Date :" />
+      <JFXDatePicker fx:id="toDateField" layoutX="263.0" layoutY="77.0" prefHeight="28.0" prefWidth="219.0" promptText="To Date :" />
+      <Label fx:id="supLabel" layoutX="28.0" layoutY="162.0" prefHeight="25.0" prefWidth="112.0" text="Supplier Wise :" />
+      <CheckComboBox fx:id="supCheckCombo" layoutX="124.0" layoutY="158.0" prefHeight="34.0" prefWidth="235.0" />
+      <JFXTextField fx:id="supRetOrRonNoField" labelFloat="true" layoutX="28.0" layoutY="24.0" prefHeight="34.0" prefWidth="144.0" promptText="Sup Return or Ron Num " />
+   </children>
+</AnchorPane>

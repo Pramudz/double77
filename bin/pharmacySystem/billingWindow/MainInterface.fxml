@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="769.0" prefWidth="1111.0" stylesheets="@../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.billingWindow.MainWindowController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab text="Billing">
+                  <content>
+                    <AnchorPane fx:id="anchor" minHeight="0.0" minWidth="0.0" onKeyPressed="#KeyEvenHandler" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="detTable" layoutX="24.0" layoutY="123.0" onKeyPressed="#KeyEvenHandler" prefHeight="270.0" prefWidth="1049.0">
+                                <columns>
+                                  <TableColumn fx:id="snoCol" prefWidth="75.0" text="S-NO" />
+                                  <TableColumn fx:id="codeCol" prefWidth="121.0" text="Code" />
+                                    <TableColumn fx:id="descCol" prefWidth="311.0" text="Product Description" />
+                                    <TableColumn fx:id="qtyCol" onEditCommit="#editQtyButtonClicked" prefWidth="171.0" text="Qty" />
+                                    <TableColumn fx:id="priceCol" prefWidth="140.0" text="Price" />
+                                    <TableColumn fx:id="discCol" prefWidth="65.0" text="Disc %" />
+                                    <TableColumn fx:id="amountCol" prefWidth="165.0" text="Amount" />
+                                </columns>
+                              </TableView>
+                              <TextField fx:id="billNo" layoutX="70.0" layoutY="11.0" prefHeight="23.0" prefWidth="112.0" />
+                              <Label alignment="CENTER" layoutX="6.0" layoutY="12.0" prefHeight="22.0" prefWidth="56.0" text="Bill No :" />
+                              <TextField fx:id="dateField" layoutX="295.0" layoutY="10.0" prefHeight="23.0" prefWidth="112.0" />
+                              <Label alignment="CENTER" layoutX="229.0" layoutY="10.0" prefHeight="22.0" prefWidth="56.0" text="Date :" />
+                              <Label alignment="CENTER" layoutX="50.0" layoutY="47.0" prefHeight="22.0" prefWidth="56.0" text="Code :" />
+                              <TextField fx:id="code" layoutX="24.0" layoutY="72.0" onAction="#getProduct" onKeyPressed="#KeyEvenHandler" prefHeight="31.0" prefWidth="112.0" styleClass="color-set" />
+                              <Label alignment="CENTER" layoutX="215.0" layoutY="48.0" prefHeight="22.0" prefWidth="137.0" text="Product Description" />
+                              <Label alignment="CENTER" layoutX="458.0" layoutY="51.0" prefHeight="22.0" prefWidth="137.0" text="Price" />
+                              <TextField fx:id="unitPrice" layoutX="474.0" layoutY="74.0" onKeyPressed="#KeyEvenHandler" prefHeight="25.0" prefWidth="107.0" />
+                              <Label alignment="CENTER" layoutX="552.0" layoutY="51.0" prefHeight="22.0" prefWidth="137.0" text="Qty" />
+                              <TextField fx:id="qty" layoutX="595.0" layoutY="74.0" onAction="#qtyAdd" onKeyPressed="#KeyEvenHandler" prefHeight="25.0" prefWidth="72.0" />
+                              <Label alignment="CENTER" layoutX="671.0" layoutY="50.0" prefHeight="22.0" prefWidth="69.0" text="Disc %" />
+                              <TextField layoutX="669.0" layoutY="74.0" prefHeight="25.0" prefWidth="68.0" />
+                              <TextField fx:id="prdCount" layoutX="85.0" layoutY="413.0" prefHeight="23.0" prefWidth="112.0" />
+                              <Label layoutX="11.0" layoutY="414.0" prefHeight="22.0" prefWidth="56.0" text="Products" />
+                              <TextField fx:id="sumOfQty" layoutX="85.0" layoutY="444.0" prefHeight="23.0" prefWidth="112.0" />
+                              <Label layoutX="10.0" layoutY="445.0" prefHeight="22.0" prefWidth="56.0" text="Qty" />
+                              <TextField layoutX="85.0" layoutY="475.0" prefHeight="23.0" prefWidth="112.0" />
+                              <Label layoutX="11.0" layoutY="476.0" prefHeight="22.0" prefWidth="56.0" text="Discount" />
+                              <TextField fx:id="subTotal" layoutX="85.0" layoutY="509.0" prefHeight="52.0" prefWidth="193.0" />
+                              <Label layoutX="11.0" layoutY="515.0" prefHeight="41.0" prefWidth="69.0" text="Subtotal">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="4.0" layoutY="607.0" prefHeight="37.0" prefWidth="71.0" text="Received" />
+                              <Label alignment="CENTER" layoutX="248.0" layoutY="611.0" prefHeight="33.0" prefWidth="67.0" text="Balance :" />
+                              <Button fx:id="resetTable" layoutX="348.0" layoutY="449.0" mnemonicParsing="false" onAction="#deleteButtonClicked" prefHeight="49.0" prefWidth="109.0" text="Reset F4" />
+                              <Button layoutX="797.0" layoutY="58.0" mnemonicParsing="false" onAction="#qtyAdd" prefHeight="44.0" prefWidth="124.0" text="Add" />
+                              <Button layoutX="797.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearTextFields" prefHeight="42.0" prefWidth="124.0" text="Clear" />
+                              <JFXButton layoutX="350.0" layoutY="396.0" onAction="#deleteButtonClicked" prefHeight="43.0" prefWidth="107.0" stylesheets="@application.css" text="Remove Product" />
+                              <JFXTextField fx:id="cashField" layoutX="75.0" layoutY="603.0" onAction="#cahsFieldEnter" prefHeight="43.0" prefWidth="174.0" />
+                              <JFXTextField fx:id="balanceField" layoutX="324.0" layoutY="607.0" prefHeight="39.0" prefWidth="203.0" />
+                              <JFXButton fx:id="saveButton" layoutX="595.0" layoutY="395.0" onAction="#saveButtonClick" prefHeight="45.0" prefWidth="97.0" text="Save" />
+                              <JFXButton layoutX="719.0" layoutY="394.0" prefHeight="45.0" prefWidth="99.0" text="Save &amp; Print" />
+                              <JFXComboBox fx:id="prdDesc" layoutX="149.0" layoutY="75.0" prefHeight="36.0" prefWidth="310.0" styleClass="color-set" />
+                              <Button fx:id="tempButton" layoutX="743.0" layoutY="535.0" mnemonicParsing="false" text="Button" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+         <bottom>
+            <TextField alignment="CENTER" text="Copyright P&amp;S Software Solutions" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </children>
+</StackPane>

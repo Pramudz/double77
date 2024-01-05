@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="305.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.purchaseOrder.getSupplierController">
+   <children>
+      <JFXTextField fx:id="searchTextField" alignment="CENTER" layoutX="67.0" layoutY="13.0" onKeyPressed="#searchItems" prefHeight="25.0" prefWidth="187.0" promptText="Search Supplier" />
+      <TableView fx:id="supplierTable" layoutX="3.0" layoutY="48.0" onKeyPressed="#keyEvenHandler" onMouseClicked="#mouseEventHandler" prefHeight="247.0" prefWidth="318.0">
+        <columns>
+          <TableColumn fx:id="supCodeCol" prefWidth="75.0" text="Sup Code" />
+          <TableColumn fx:id="supNameCol" prefWidth="242.0" text="Supplier Name" />
+        </columns>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+</AnchorPane>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="541.0" prefWidth="606.0" styleClass="logo-background" stylesheets="@../resources/Styles/admin.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.addMedicine.AddMedicineController">
+   <children>
+      <VBox layoutX="42.0" layoutY="26.0" prefHeight="316.0" prefWidth="223.0" spacing="5.0" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="26.0">
+         <children>
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="ITEM ID                                         :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="ITEM NAME                                  :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="CATEGORY                                    :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="SUPPLIER                                      :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="UNIT PRICE                                   :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="COST PRICE                                  :" textAlignment="JUSTIFY" />
+            <Label prefHeight="41.0" prefWidth="262.0" styleClass="textFill" text="BARCODE                                     :" textAlignment="JUSTIFY" />
+         </children>
+      </VBox>
+      <VBox layoutX="341.0" layoutY="31.0" prefHeight="316.0" prefWidth="223.0" spacing="5.0" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="341.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="31.0">
+         <children>
+            <JFXTextField fx:id="itemIdField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <JFXTextField fx:id="itemNameField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <ComboBox fx:id="categoryCombo" editable="true" opacity="0.33" prefHeight="39.0" prefWidth="225.0" styleClass="menu-buttons-selected" VBox.vgrow="ALWAYS" />
+            <ComboBox fx:id="supplierCombo" editable="true" opacity="0.33" prefHeight="39.0" prefWidth="225.0" styleClass="menu-buttons-selected" />
+            <JFXTextField fx:id="unitPriceField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <JFXTextField fx:id="costPriceField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+            <JFXTextField fx:id="barCodeField" prefHeight="38.0" prefWidth="223.0" styleClass="textFill" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" layoutY="441.0" prefHeight="102.0" prefWidth="606.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="441.0">
+         <children>
+            <JFXButton onAction="#addMedicne" prefHeight="74.0" prefWidth="212.0" styleClass="menu-buttons-selected" text="Add Medicine">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton onAction="#closeAction" prefHeight="74.0" prefWidth="212.0" styleClass="menu-buttons-selected" text="Cancel">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

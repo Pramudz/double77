@@ -1,0 +1,36 @@
+<hibernate-configuration>
+	<session-factory>
+		<!-- JDBC Database connection settings -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/javahelps</property>
+		<property name="hibernate.connection.username">root</property>
+		<!-- The database password -->
+		<property name="hibernate.connection.password"></property>
+		<!-- JDBC connection pool settings ... using built-in test pool -->
+		<property name="hibernate.connection.pool_size">1</property>
+		<!-- Select our SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+		<!-- Echo the SQL to stdout -->
+		<property name="show_sql">true</property>
+		<!-- Set the current session context -->
+		<property name="current_session_context_class">thread</property>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">create-drop</property>
+		<!-- dbcp connection pool configuration -->
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">300</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<mapping class="pharmacySystem.entities.Products" />
+		<mapping class="pharmacySystem.entities.Category" />
+		<mapping class="pharmacySystem.entities.Supplier" />
+		<mapping class="pharmacySystem.entities.Users" />
+		<mapping class="pharmacySystem.entities.Role" />
+		<mapping class="pharmacySystem.entities.Sales" />
+		<mapping class="pharmacySystem.entities.PayModes" />
+		<mapping class="pharmacySystem.entities.PurchaseOrder" />
+		<mapping class="pharmacySystem.entities.OrderItems" />
+		
+	</session-factory>
+</hibernate-configuration>

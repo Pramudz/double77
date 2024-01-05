@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="305.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.userMaintain.UserTableController">
+   <children>
+      <JFXTextField fx:id="searchUserTableField" alignment="CENTER" layoutX="67.0" layoutY="13.0" prefHeight="25.0" prefWidth="187.0" promptText="Search &amp; Select User" />
+      <TableView fx:id="userTable" layoutX="3.0" layoutY="48.0" prefHeight="247.0" prefWidth="318.0">
+        <columns>
+          <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User Id" />
+          <TableColumn fx:id="userNameCol" prefWidth="242.0" text="User Name" />
+        </columns>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+   </padding>
+</AnchorPane>

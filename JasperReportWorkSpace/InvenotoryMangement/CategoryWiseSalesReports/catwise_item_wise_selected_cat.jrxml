@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="catwise_item_wise_selected_cat" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27d0716b-d7c0-4c9f-ab06-13f1e5dbe75a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="fromDate" class="java.sql.Date"/>
+	<parameter name="toDate" class="java.sql.Date"/>
+	<parameter name="printedBy" class="java.lang.String"/>
+	<parameter name="quantity" class="java.lang.Double"/>
+	<parameter name="wherefunctionequal" class="java.lang.String"/>
+	<parameter name="categories" class="java.util.List"/>
+	<queryString language="SQL">
+		<![CDATA[select catname as category ,prdid as productid, pname as productname,sum(salesqty) as salesqty, sum(TotalSales) as TotalSales, 
+sum(vat) as vat, sum(withoutTaxSales) as WithoutTaxSale from
+((select sal.sales_date as tdate,cat.cat_name as catname , prd.prd_id as prdid, prd.p_name as pname, round(sum(sal.sales_qty),1) as salesqty ,round(sum(sal.item_net_amount),2) as TotalSales ,
+ round((sum(sal.discounted_price/ ((sal.item_vat+100)/100)*sal.item_vat/100 * sal.sales_qty)),2) as vat,
+ round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxSales from sales_detail sal inner join products prd
+on prd.prd_id=sal.product_id inner join category cat on cat.cat_id= prd.cat_id where sal.item_cancel_status=false and
+sal.sales_date between $P{fromDate} and $P{toDate}  group by tdate,cat.cat_name ,prd.prd_id
+having sum(sal.sales_qty) > 0  order by  sal.sales_date,cat.cat_name,(sal.sales_qty) desc)
+union all
+(select sal.invoice_date as tdate,cat.cat_name as catname , prd.prd_id as prdid, prd.p_name as pname, round(sum(sal.sales_qty),1) as salesqty ,round(sum(sal.item_net_amount),2) as TotalSales , 
+round((sum(sal.discounted_price/ ((sal.item_vat+100)/100)*sal.item_vat/100 * sal.sales_qty)),2) as vat,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxSales from credit_invoice_detail sal inner join products prd
+on prd.prd_id=sal.product_id inner join category cat on cat.cat_id= prd.cat_id where
+sal.invoice_date between $P{fromDate} and $P{toDate}  group by tdate,cat.cat_name ,prd.prd_id
+having sum(sal.sales_qty) > 0  order by  sal.invoice_date,cat.cat_name,(sal.sales_qty) desc) 
+union all
+(select v.void_date as tdate,cat.cat_name as catname , prd.prd_id as prdid, prd.p_name as pname, round(sum(sal.sales_qty*(-1)),1) as salesqty ,round(sum(sal.item_net_amount*(-1)),2) as TotalSales , 
+round((sum(sal.discounted_unit_price/ ((sal.item_vat+100)/100)*sal.item_vat/100 * sal.sales_qty)*(-1)),2) as vat,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))*(-1)),2) as withoutTaxSales from credit_invoice_void v inner join credit_invoice_void_detail sal
+on v.void_id=sal.void_id inner join products prd
+on prd.prd_id=sal.product_id inner join category cat on cat.cat_id= prd.cat_id where
+v.void_date between $P{fromDate} and $P{toDate}  group by tdate,cat.cat_name ,prd.prd_id
+having sum(sal.sales_qty) > 0  order by  v.void_date,cat.cat_name,(sal.sales_qty) desc)
+union all
+(select ref.refund_date as tdate,cat.cat_name as catname , prd.prd_id as prdid, prd.p_name as pname, round(sum(sal.sales_qty*(-1)),1) as salesqty ,round(sum(sal.item_net_amount*(-1)),2) as TotalSales , 
+round((sum(sal.discounted_unit_price/ ((sal.item_vat+100)/100)*sal.item_vat/100 * sal.sales_qty)*(-1)),2) as vat,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))*(-1)),2) as withoutTaxSales from customer_refunds ref inner join customer_refund_detail sal
+on ref.refund_id=sal.refund_id inner join products prd
+on prd.prd_id=sal.product_id inner join category cat on cat.cat_id= prd.cat_id where
+ref.refund_date between $P{fromDate} and $P{toDate}  group by tdate,cat.cat_name ,prd.prd_id
+having sum(sal.sales_qty) > 0  order by  ref.refund_date,cat.cat_name,(sal.sales_qty) desc)
+ ) as t where $X{IN,catname,categories} group by catname,prdid having sum(salesqty) $P!{wherefunctionequal} $P{quantity}  order by catname,salesqty ;]]>
+	</queryString>
+	<field name="category" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="category"/>
+	</field>
+	<field name="productid" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="productid"/>
+	</field>
+	<field name="productname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="productname"/>
+	</field>
+	<field name="salesqty" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="salesqty"/>
+	</field>
+	<field name="TotalSales" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="TotalSales"/>
+	</field>
+	<field name="vat" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="vat"/>
+	</field>
+	<field name="WithoutTaxSale" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="WithoutTaxSale"/>
+	</field>
+	<variable name="sumTotalSale" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalSales}]]></variableExpression>
+	</variable>
+	<variable name="sumOfTax" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vat}]]></variableExpression>
+	</variable>
+	<variable name="sumOfWotax" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{WithoutTaxSale}]]></variableExpression>
+	</variable>
+	<variable name="sumOfQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{salesqty}]]></variableExpression>
+	</variable>
+	<group name="summary">
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement mode="Opaque" x="158" y="0" width="222" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="56dc829e-43bd-4723-a0a1-57f8882791aa">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb4d168c-22c6-447b-99d4-adc568ef5dc6"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Summary]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+					<reportElement x="472" y="0" width="120" height="20" uuid="6e93c490-0568-4e69-aa8d-c8a4b77377b6">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb4d168c-22c6-447b-99d4-adc568ef5dc6"/>
+					</reportElement>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumTotalSale}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+					<reportElement x="673" y="0" width="127" height="20" uuid="a3929cf8-979f-406a-8866-477f03ff790e">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="49961eb3-29c2-4ef5-9e81-b493b684b212"/>
+					</reportElement>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumOfWotax}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+					<reportElement x="592" y="0" width="81" height="20" uuid="f1fbf846-22fb-4254-b12d-192e096e8fb7">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5048761-75cb-4026-89fb-7178fee92a4f"/>
+					</reportElement>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumOfTax}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+					<reportElement x="380" y="0" width="92" height="20" uuid="b96ade68-8a06-4498-bfc0-377d593efa67">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb4d168c-22c6-447b-99d4-adc568ef5dc6"/>
+					</reportElement>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumOfQty}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="820" height="92" backcolor="#006699" uuid="19be2286-61c4-4c68-a004-173dbbfcff54">
+					<property name="com.jaspersoft.studio.layout"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="20" y="20" width="440" height="43" forecolor="#FFFFFF" uuid="e741a375-7eba-49da-8f47-431fc503f4a6"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Category Item Wise Sales Report ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="548" y="30" width="52" height="16" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="38a12549-5515-4f63-90a1-77e560aefc35"/>
+					<text><![CDATA[From Date :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="549" y="52" width="52" height="16" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="2b96e8fd-f39d-435a-9ea7-cf3916d139aa"/>
+					<text><![CDATA[To Date :]]></text>
+				</staticText>
+				<textField pattern="MMM d, yyyy">
+					<reportElement positionType="FixRelativeToBottom" x="614" y="30" width="100" height="16" forecolor="#FFFFFF" uuid="59dacd22-f6d7-4cdd-8fb4-d94fef6a7fb6"/>
+					<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMM d, yyyy">
+					<reportElement positionType="FixRelativeToBottom" x="614" y="54" width="101" height="13" forecolor="#FFFFFF" uuid="ac1e07a9-12c3-4e16-89d3-1876960b9f44"/>
+					<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="d966c1f6-805b-4db2-a8c0-f0b37396b8e0"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="34394eba-1f32-4283-85d6-f982a62a5ea7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f8b2d6d6-3d0d-42b6-bd82-e8375522554a"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[cat_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="79" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="71e9c27c-42a6-48ca-b3b8-974ba6493c68">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6591e34b-ff2b-4de9-a32e-e0ad0926b76d"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[prd_id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="158" y="0" width="222" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c9d79b53-1fa2-4643-b4fd-c34ac6b45459">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29ae249e-cc38-4bbb-a5a8-10419bbf8b64"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[p_name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="380" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6bf4a9ba-161a-4bb3-a914-d289ef1ec747">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c6bacfb-831c-4160-9c5a-89e8f7b13ee6"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[salesqty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="472" y="0" width="120" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="69fe9abb-32e0-432c-ad2d-1d5e671a14ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25cd0459-3b3a-424c-b963-50d02457a2ee"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TotalSales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="592" y="0" width="81" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7941d8da-0256-4ea7-83c9-599bbed767fe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d6b8d04e-9f36-4d7c-ae4b-63afed742d96"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[vat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="673" y="0" width="125" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="2e2f050a-f366-4b69-902a-b2ea981416ad">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2606733-bf7a-4485-96f5-e98360f667f1"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[withoutTaxSales]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="20" width="798" height="1" uuid="787549ab-34ed-486f-beee-490b9809dd8d"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="79" height="20" uuid="84190c51-a8e8-4db1-b5ec-48d3214133e7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f8b2d6d6-3d0d-42b6-bd82-e8375522554a"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="79" y="0" width="79" height="20" uuid="6409b4f5-f4e9-46ab-9779-338f4153bf1a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6591e34b-ff2b-4de9-a32e-e0ad0926b76d"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="170" y="0" width="210" height="20" uuid="6a79b571-0604-46e7-ad97-200c07028db6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29ae249e-cc38-4bbb-a5a8-10419bbf8b64"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="380" y="0" width="92" height="20" uuid="97f28ef1-a03d-45fb-ab01-c49f43a1485f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c6bacfb-831c-4160-9c5a-89e8f7b13ee6"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesqty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="472" y="0" width="108" height="20" uuid="eb1a873e-f070-46c6-9e94-ff93bd51f3a8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25cd0459-3b3a-424c-b963-50d02457a2ee"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalSales}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="592" y="0" width="79" height="20" uuid="41bae9cd-e0cc-4aaa-b1c7-92fcbaddfd70">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d6b8d04e-9f36-4d7c-ae4b-63afed742d96"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="673" y="0" width="125" height="20" uuid="4c60cd56-8794-428b-8676-a527ccad4775">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2606733-bf7a-4485-96f5-e98360f667f1"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WithoutTaxSale}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="760" height="13" backcolor="#E6E6E6" uuid="96ff8ede-6f3a-4995-9da1-bf9f541d1b59"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="760" y="3" width="40" height="13" backcolor="#E6E6E6" uuid="012e78c4-d242-41e7-985b-cbb24cd31944"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="a2f22f4c-0274-4996-a201-6975958842c8"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="4" width="70" height="13" uuid="49acb7ff-54a5-4cd4-a173-16a0b4903f44"/>
+				<textFieldExpression><![CDATA[$P{printedBy}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="204" y="3" width="57" height="17" uuid="21023508-15db-48a4-92f0-dad7df01a19f"/>
+				<text><![CDATA[Printed By :]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

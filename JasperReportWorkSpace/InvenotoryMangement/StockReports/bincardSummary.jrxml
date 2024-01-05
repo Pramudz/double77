@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bincardSummary" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27bc771b-7673-48dc-b011-ee48d3eae09f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="471"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="524"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="streetAddress" class="java.lang.String"/>
+	<parameter name="addressLine" class="java.lang.String"/>
+	<parameter name="city" class="java.lang.String"/>
+	<parameter name="telephoneNum" class="java.lang.String"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.sql.Date"/>
+	<parameter name="printedBy" class="java.lang.String"/>
+	<parameter name="toDate" class="java.sql.Date"/>
+	<parameter name="prdId" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select * from (
+(select "CRDN" as document,p.prd_id,p.p_name, sum(sales_qty)*-1 as transQty , invoice_date as tranDate from credit_invoice_detail crd inner join products p on p.prd_id=crd.product_id group by tranDate,prd_id,document order by tranDate,prd_id,document)
+union
+(select "CRDNREF" as document,p.prd_id,p.p_name, sum(sales_qty) as transQty , civ.invoice_date as tranDate from credit_invoice_void_detail crdv inner join products p on p.prd_id=crdv.product_id inner join credit_invoice_void civ on crdv.void_id=civ.void_id  group by tranDate,prd_id,document order by tranDate,prd_id,document)
+union
+(select "POSSREF" as document,p.prd_id,p.p_name, sum(refund_qty) as transQty , civ.refund_date as tranDate from customer_refund_detail crdv inner join products p on p.prd_id=crdv.product_id inner join customer_refunds civ on crdv.refund_id=civ.refund_id  group by tranDate,prd_id,document order by tranDate,prd_id,document)
+union
+(select "GRN" as document,p.prd_id,p.p_name, sum(received_qty) as transQty , civ.grn_date as tranDate from good_received_details crdv inner join products p on p.prd_id=crdv.prd_id inner join good_received_mass civ on crdv.grn_id=civ.grn_id  group by tranDate,prd_id,document order by tranDate,prd_id,document)
+union
+(select "POSS" as document,p.prd_id,p.p_name, sum(sales_qty)*-1 as transQty , sales_date as tranDate from sales_detail crd inner join products p on p.prd_id=crd.product_id group by tranDate,prd_id,document order by tranDate,prd_id,document)
+union
+(select "SUPRTRN" as document,p.prd_id,p.p_name, sum(return_qty)*-1 as transQty , civ.return_date as tranDate from supplier_return_det crdv inner join products p on p.prd_id=crdv.prd_id inner join supplier_return_mass civ on crdv.sup_return_id=civ.sup_return_id  group by tranDate,prd_id,document order by tranDate,prd_id,document)
+) as bincard where prd_id= $P{prdId}   and tranDate between  $P{fromDate}   and  $P{toDate}   group by tranDate,prd_id,document order by tranDate,prd_id,document]]>
+	</queryString>
+	<field name="document" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="document"/>
+		<property name="com.jaspersoft.studio.field.label" value="document"/>
+	</field>
+	<field name="prd_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="prd_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="prd_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
+	</field>
+	<field name="p_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="p_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="p_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
+	</field>
+	<field name="transQty" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="transQty"/>
+		<property name="com.jaspersoft.studio.field.label" value="transQty"/>
+	</field>
+	<field name="tranDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="tranDate"/>
+		<property name="com.jaspersoft.studio.field.label" value="tranDate"/>
+	</field>
+	<group name="Group1">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupFooter>
+			<band>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="151">
+			<frame>
+				<reportElement mode="Opaque" x="3" y="-3" width="557" height="154" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="a05e540e-ce97-4fab-bae1-bc48006e0fa6"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="230" y="7" width="310" height="37" forecolor="#000000" backcolor="#FFFFFF" uuid="9e3f3fad-db70-4b08-adce-ea23f61510bd"/>
+					<textElement>
+						<font fontName="Courier New" size="22" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bin Card Summary]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="271" y="46" width="92" height="22" forecolor="#000000" uuid="22f44b3d-24f7-478a-b707-d9835e8437ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<text><![CDATA[From Date :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="21" y="21" width="199" height="20" uuid="1624bd89-274a-4eb6-bfb3-2145a66526d1">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{streetAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="42" width="199" height="20" uuid="f307578b-489c-4ed7-8244-1ca4f1b3dba8">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{addressLine}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="64" width="199" height="20" uuid="7593b7af-ab96-4cba-bf3f-b9a51007992e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{city}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="86" width="161" height="20" uuid="4a1acdbb-1592-46cc-9546-2160b2323605">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{telephoneNum}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="86" width="37" height="20" uuid="520885ad-42cc-402c-8460-f508721ba513">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="12"/>
+					</textElement>
+					<text><![CDATA[Tel :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="21" y="1" width="199" height="20" uuid="a92e6c80-06e5-4fba-9b6a-6eb77c4e80fa">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMM d, yyyy">
+					<reportElement x="369" y="47" width="119" height="22" uuid="57c230f6-6e43-4ea3-a400-28336889d939">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMM d, yyyy">
+					<reportElement x="369" y="75" width="119" height="22" uuid="a8f39e71-74c8-4ba9-9d37-75acab5461f4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="271" y="74" width="92" height="22" forecolor="#000000" uuid="844e7e3d-89ea-4d0b-b01f-4bdc433cf03f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Courier New" size="11"/>
+					</textElement>
+					<text><![CDATA[To Date :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="3" y="112" width="77" height="22" forecolor="#000000" uuid="6b59eab0-a7fa-4bd4-a969-23e0d960cc93">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Product Id :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="274" y="112" width="92" height="21" forecolor="#000000" uuid="017cde37-516a-469f-afe7-f0916b037bb3"/>
+					<textElement>
+						<font fontName="Courier New"/>
+						<paragraph lineSpacing="Double"/>
+					</textElement>
+					<text><![CDATA[Product Name :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="82" y="112" width="119" height="21" uuid="5ba0a176-a85f-45a5-a7de-ed5a2ebb430a">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{prd_id}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="366" y="112" width="176" height="21" uuid="4017e7fd-f5c1-47fb-a702-7330672e0b4f">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Courier New"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{p_name}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29">
+			<line>
+				<reportElement x="-20" y="28" width="595" height="1" forecolor="#666666" uuid="888fb298-0cd3-4290-af93-0fa866caf949"/>
+			</line>
+			<staticText>
+				<reportElement x="366" y="0" width="89" height="28" forecolor="#000000" uuid="4662cd87-9f6d-4d54-b93e-19bb4522c89f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<text><![CDATA[Transaction Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="198" y="0" width="118" height="28" forecolor="#000000" uuid="9073207d-a675-4047-a5dc-6027434bd606">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Document Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="48" y="0" width="120" height="28" forecolor="#000000" uuid="6b1e42f3-8ff8-4cde-99e0-8ec03043e007">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Transaction Date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="198" y="0" width="118" height="20" uuid="cfde197e-cac9-4ebc-83e6-6c98702eda24">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{document}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="366" y="0" width="89" height="20" uuid="4402bc44-57dd-4b19-91f4-1ce2b615a89c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transQty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d-MM-y">
+				<reportElement x="48" y="0" width="120" height="20" uuid="25772f57-99c2-4968-84c8-12bf01cef35c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tranDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23">
+			<textField>
+				<reportElement mode="Opaque" x="5" y="0" width="524" height="23" backcolor="#E6E6E6" uuid="3b2691e7-81ac-4808-b418-5c15a68124a2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+"of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="529" y="0" width="40" height="23" backcolor="#E6E6E6" uuid="434673d9-36ee-438b-9cee-2de96c5b1399"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="5" y="10" width="141" height="13" uuid="0b17dc25-922a-4d52-9a5e-e02e72365913"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="25">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="61" y="10" width="100" height="15" uuid="91f85a60-24db-4db5-941b-6e3de373b933"/>
+				<textFieldExpression><![CDATA[$P{printedBy}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="61" height="15" uuid="77bc733f-fe3c-431c-83f3-51ef46199582"/>
+				<text><![CDATA[Printed By :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

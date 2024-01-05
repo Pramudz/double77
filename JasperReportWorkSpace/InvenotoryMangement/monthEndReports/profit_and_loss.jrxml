@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profit_and_loss" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34c3a38e-8c2a-4c14-81e0-3fc9656931a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset" uuid="b63ad53b-1969-47a4-b221-e7b66f25d877">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Testing Adapter"/>
+		<parameter name="fromDate" class="java.lang.String"/>
+		<parameter name="toDate" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select maincatname, sum(withoutTaxsale)  , sum(costOfSales) , sum(withoutTaxSale-costOfSales) as grossprofit , sum(withoutTaxSale-costOfSales)/sum(withoutTaxSale)
+ as gp from
+((select sal.sales_date as tdate, cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxSale,
+round(sum(sal.sales_qty * sal.cost_price)/((100+sal.item_vat)/100),2) as costOfSales 
+from sales_detail sal inner join 
+products prd on prd.prd_id=sal.product_id
+inner join category cat on cat.cat_id=prd.cat_id right join 
+category mcat on mcat.cat_id=cat.main_category where cat.main_category is not null and sal.item_cancel_status=false group by tdate, maincatname, subcatname)
+union all
+(select sal.invoice_date as tdate , cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxsale,
+round(sum(sal.sales_qty * sal.cost_price)/((100+sal.item_vat)/100),2) as costOfSales from 
+credit_invoice_detail sal inner join 
+products prd on prd.prd_id=sal.product_id
+inner join category cat on cat.cat_id=prd.cat_id right join 
+category mcat on mcat.cat_id=cat.main_category where cat.main_category is not null group by tdate,maincatname, subcatname)
+union all
+(select crMain.refund_date as tdate,cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(crDet.item_net_amount/((100+crDet.item_vat)/100))*-1),2) as withoutTaxsale ,
+round(sum(crDet.sales_qty * crDet.cost_price)/((100+crDet.item_vat)/100)*-1,2) as costOfSales
+from customer_refunds crMain inner join customer_refund_detail crDet
+on crMain.refund_id=crDet.refund_id inner join products prd on crDet.product_id=prd.prd_id 
+inner join category cat on cat.cat_id=prd.cat_id right join 
+category mcat on mcat.cat_id=cat.main_category where cat.main_category is not null group by tdate,maincatname, subcatname)
+union all
+(select crMain.void_date as tdate,cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(crDet.item_net_amount/((100+crDet.item_vat)/100))*-1),2) as withoutTaxsale ,
+round(sum(crDet.sales_qty * crDet.cost_price)/((100+crDet.item_vat)/100)*-1,2) as costOfSales
+from credit_invoice_void crMain inner join credit_invoice_void_detail crDet
+on crMain.void_id=crDet.void_id inner join products prd on crDet.product_id=prd.prd_id 
+inner join category cat on cat.cat_id=prd.cat_id right join 
+category mcat on mcat.cat_id=cat.main_category where cat.main_category is not null group by tdate,maincatname, subcatname)
+) as t where tdate between   $P{fromDate} and   $P{toDate}  group by maincatname,subcatname;]]>
+		</queryString>
+		<field name="maincatname" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="maincatname"/>
+			<property name="com.jaspersoft.studio.field.label" value="maincatname"/>
+		</field>
+		<field name="sum(withoutTaxsale)" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="sum(withoutTaxsale)"/>
+			<property name="com.jaspersoft.studio.field.label" value="sum(withoutTaxsale)"/>
+		</field>
+		<field name="sum(costOfSales)" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="sum(costOfSales)"/>
+			<property name="com.jaspersoft.studio.field.label" value="sum(costOfSales)"/>
+		</field>
+		<field name="grossprofit" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="grossprofit"/>
+			<property name="com.jaspersoft.studio.field.label" value="grossprofit"/>
+		</field>
+		<field name="gp" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="gp"/>
+			<property name="com.jaspersoft.studio.field.label" value="gp"/>
+		</field>
+		<variable name="totalRevenue" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{sum(withoutTaxsale)}]]></variableExpression>
+		</variable>
+		<variable name="totalCostOfSales" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{sum(costOfSales)}]]></variableExpression>
+		</variable>
+		<variable name="totalGpValue" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{grossprofit}]]></variableExpression>
+		</variable>
+		<variable name="totalGpMargin" class="java.lang.Double">
+			<variableExpression><![CDATA[$V{totalGpValue}/$V{totalRevenue}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="c3cb0352-f653-4535-a62f-411f2dec23e6">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+		<parameter name="toMonth" class="java.lang.Integer"/>
+		<parameter name="fromYear" class="java.lang.Integer"/>
+		<parameter name="toYear" class="java.lang.Integer"/>
+		<parameter name="fromMonth" class="java.lang.Integer"/>
+		<queryString language="SQL">
+			<![CDATA[select oc.overhead_category, sum(amount) as expenseamount from  overhead_category oc inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
+where month between   $P{fromMonth}  and   $P{toMonth}  and year between $P{fromYear}  and  $P{toYear}    group by oc.overhead_category;]]>
+		</queryString>
+		<field name="overhead_category" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="overhead_category"/>
+			<property name="com.jaspersoft.studio.field.label" value="overhead_category"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="overhead_category"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="expenseamount" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="expenseamount"/>
+			<property name="com.jaspersoft.studio.field.label" value="expenseamount"/>
+		</field>
+		<variable name="totalOverhead" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{expenseamount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="streetAddress" class="java.lang.String"/>
+	<parameter name="addressLine" class="java.lang.String"/>
+	<parameter name="city" class="java.lang.String"/>
+	<parameter name="telephoneNum" class="java.lang.String"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.sql.Date"/>
+	<parameter name="toDate" class="java.sql.Date"/>
+	<parameter name="fromMonth" class="java.lang.Integer"/>
+	<parameter name="toMonth" class="java.lang.Integer"/>
+	<parameter name="fromYear" class="java.lang.Integer"/>
+	<parameter name="toYear" class="java.lang.Integer"/>
+	<parameter name="printedBy" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from ((select sum(amount) as expenseamount from  overhead_category oc inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
+where month between   $P{fromMonth}  and $P{toMonth}   and year between   $P{fromYear} and  $P{toYear} ) as i ,
+(select sum(withoutTaxSale-costOfSales) as grossprofit from
+((select sal.sales_date as tdate, cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxSale,
+round(sum(sal.sales_qty * sal.cost_price)/((100+sal.item_vat)/100),2) as costOfSales 
+from sales_detail sal inner join 
+products prd on prd.prd_id=sal.product_id
+inner join category cat on cat.cat_id=prd.cat_id inner join 
+category mcat on mcat.cat_id=cat.cat_id where sal.item_cancel_status=false group by tdate, maincatname, subcatname)
+union all
+(select sal.invoice_date as tdate , cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxsale,
+round(sum(sal.sales_qty * sal.cost_price)/((100+sal.item_vat)/100),2) as costOfSales from 
+credit_invoice_detail sal inner join 
+products prd on prd.prd_id=sal.product_id
+inner join category cat on cat.cat_id=prd.cat_id inner join 
+category mcat on mcat.cat_id=cat.cat_id group by tdate,maincatname, subcatname)
+union all
+(select crMain.refund_date as tdate,cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(crDet.item_net_amount/((100+crDet.item_vat)/100))*-1),2) as withoutTaxsale ,
+round(sum(crDet.sales_qty * crDet.cost_price)/((100+crDet.item_vat)/100)*-1,2) as costOfSales
+from customer_refunds crMain inner join customer_refund_detail crDet
+on crMain.refund_id=crDet.refund_id inner join products prd on crDet.product_id=prd.prd_id 
+inner join category cat on cat.cat_id=prd.cat_id inner join 
+category mcat on mcat.cat_id=cat.cat_id  group by tdate,maincatname, subcatname)
+union all
+(select crMain.void_date as tdate,cat.cat_name as subcatname , mcat.cat_name as maincatname,
+round((sum(crDet.item_net_amount/((100+crDet.item_vat)/100))*-1),2) as withoutTaxsale ,
+round(sum(crDet.sales_qty * crDet.cost_price)/((100+crDet.item_vat)/100)*-1,2) as costOfSales
+from credit_invoice_void crMain inner join credit_invoice_void_detail crDet
+on crMain.void_id=crDet.void_id inner join products prd on crDet.product_id=prd.prd_id 
+inner join category cat on cat.cat_id=prd.cat_id inner join 
+category mcat on mcat.cat_id=cat.cat_id  group by tdate,maincatname, subcatname)
+) as t where tdate between  $P{fromDate}  and  $P{toDate} ) as s);]]>
+	</queryString>
+	<field name="expenseamount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="expenseamount"/>
+		<property name="com.jaspersoft.studio.field.label" value="expenseamount"/>
+	</field>
+	<field name="grossprofit" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="grossprofit"/>
+		<property name="com.jaspersoft.studio.field.label" value="grossprofit"/>
+	</field>
+	<variable name="totalOverheadMainReport" class="java.lang.Double"/>
+	<variable name="totalMainReportGp" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="230">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="140" backcolor="#006699" uuid="dbde07fa-c33a-4774-a45d-68db6b4e5713"/>
+				<staticText>
+					<reportElement x="270" y="10" width="260" height="43" forecolor="#FFFFFF" uuid="d3d2913e-dfa3-4c9a-aa98-5343c0de64e2"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Profit and Loss]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="241" y="54" width="80" height="20" forecolor="#FFFFFF" uuid="da959216-46c8-46a7-8743-62823fad9e1c"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[From :]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="21" y="8" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="0182a81e-1f67-463c-87ea-0b067a8f7db2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="21" y="30" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="a66825bb-b651-468c-8452-8f28f1fc9d9a">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{streetAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="21" y="51" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="a6a8cd47-315a-4796-9a95-7c44e8eac520">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{addressLine}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="99" width="37" height="20" forecolor="#FFFFFF" uuid="51695839-6407-441c-850e-c66e003a6b2d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tel :]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="21" y="75" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="7ac43a7c-313d-4bce-88e4-5962c003c3e5">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{city}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="58" y="98" width="161" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="12823b4f-0a12-4fc5-ba40-7e75fffc094f">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{telephoneNum}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="241" y="78" width="80" height="20" forecolor="#FFFFFF" uuid="c73a57e7-2287-4a2c-99f5-52bea5cafeaf"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[To :]]></text>
+				</staticText>
+				<textField pattern="MMM d, yyyy">
+					<reportElement mode="Transparent" x="340" y="54" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="37408cfd-9d0c-4205-8180-3e9115bbe9e9">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMM d, yyyy">
+					<reportElement mode="Transparent" x="340" y="78" width="199" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="eea40c42-9d20-41d3-a8db-37e3001d0cc2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="-10" y="129" width="340" height="31" uuid="44b88a15-ad14-419e-9fe0-54e053343f21"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Revenue & Gross Profit :]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="-10" y="160" width="565" height="60" uuid="42e5d7b7-5437-4c9d-9b24-9aa4fb2265c4">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="Blank">
+					<datasetRun subDataset="Dataset" uuid="81283972-22f7-4518-96e9-44e20b7eba5b">
+						<datasetParameter name="fromDate">
+							<datasetParameterExpression><![CDATA[$P{fromDate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="toDate">
+							<datasetParameterExpression><![CDATA[$P{toDate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="120" uuid="83775507-7b7a-47d7-b816-645c1b17c0c9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableFooter style="Table_TH" height="18" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="18" uuid="6b274b4a-fa60-433b-a48c-6b6d578ed652"/>
+								<textElement>
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="40" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="916a038b-8ef4-4812-a45a-56e51594655c"/>
+								<textElement textAlignment="Center">
+									<font size="14"/>
+								</textElement>
+								<text><![CDATA[Category]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="2" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="120" height="20" uuid="7924afe8-74fd-4a4e-bb43-34f9e9b637cc"/>
+								<textElement>
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{maincatname}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="c5ca4076-bbbd-4014-81e6-fe28616919cb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableFooter style="Table_TH" height="18" rowSpan="1">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="140" height="18" uuid="5b4c1ed7-5451-4ebb-840e-edf374823c61"/>
+								<textElement textAlignment="Right">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalRevenue}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="40" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="140" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="e4f839d9-d6b0-40b6-9944-620440fa9656"/>
+								<textElement textAlignment="Center">
+									<font size="14"/>
+								</textElement>
+								<text><![CDATA[Revenue Rs.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="2" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="140" height="20" uuid="5406ab8f-2e7f-429f-bd07-18b2f32dc2fb"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{sum(withoutTaxsale)}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="150" uuid="7b62c0da-54a8-40fd-aaac-3a7e15d282b9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableFooter style="Table_TH" height="18" rowSpan="1">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="150" height="18" uuid="7700606e-5640-41b2-90fc-7b984c607cc9"/>
+								<textElement textAlignment="Right">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalCostOfSales}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="40" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="150" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="1cdb29a9-8c28-45ff-8b82-5c5f53149cce"/>
+								<textElement textAlignment="Center">
+									<font size="14"/>
+								</textElement>
+								<text><![CDATA[Cost of Sales Rs.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="2" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="150" height="20" uuid="0400fe29-3c90-40b1-92d1-5a7c125e2ddb"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{sum(costOfSales)}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="4a639ff5-f241-45b4-b84e-aa727ea39d3d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableFooter style="Table_TH" height="18" rowSpan="1">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="100" height="18" uuid="6d81de72-be89-4231-890b-a9cc489bc8d5"/>
+								<textElement textAlignment="Right">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalGpValue}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="40" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="100" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="da8e2161-b255-4045-9bb7-68eb0ac18d65"/>
+								<textElement textAlignment="Center">
+									<font size="14"/>
+								</textElement>
+								<text><![CDATA[Gross Profit Rs.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="2" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="100" height="20" uuid="31bb9d8b-a400-408a-8136-260dcb1799e3"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{grossprofit}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="15c5ef2f-8b88-459a-b12b-1cc27bbd834a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableFooter style="Table_TH" height="18" rowSpan="1">
+							<textField pattern="#,##0.##%;(#,##0.##-) %">
+								<reportElement x="0" y="0" width="70" height="18" uuid="3f1bef2f-627e-4403-b913-31fbbcf6995e"/>
+								<textElement textAlignment="Right">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalGpMargin}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="Table_CH" height="40" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="70" height="40" forecolor="#FFFFFF" backcolor="#006699" uuid="ccfd6c36-dab2-4ebc-8687-8aacb481e9dc"/>
+								<textElement textAlignment="Center">
+									<font size="14"/>
+								</textElement>
+								<text><![CDATA[GP Margin %]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="2" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField pattern="#,##0.##%;(#,##0.##-) %">
+								<reportElement x="0" y="0" width="70" height="20" uuid="0fb4fe5a-8dca-4fce-8ad9-afdf2e26a6b0"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{gp}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="100">
+			<componentElement>
+				<reportElement x="-8" y="40" width="250" height="60" uuid="2ad63d5c-89cc-4335-b5fb-db2d8f30acfa">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset2" uuid="160300e6-454b-4ccc-8f7e-b5c89b5fd4a3">
+						<datasetParameter name="fromMonth">
+							<datasetParameterExpression><![CDATA[$P{fromMonth}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="toMonth">
+							<datasetParameterExpression><![CDATA[$P{toMonth}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fromYear">
+							<datasetParameterExpression><![CDATA[$P{fromYear}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="toYear">
+							<datasetParameterExpression><![CDATA[$P{toYear}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="120" uuid="0777750b-8e6f-450e-a056-ec58cee4a27a">
+						<jr:tableHeader style="Table 1_TH" height="2"/>
+						<jr:tableFooter style="Table 1_TH" height="2"/>
+						<jr:columnHeader style="Table 1_CH" height="38">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="38" uuid="27f35921-0c19-4afd-9e3c-a4f1ccdecf59"/>
+								<textElement>
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Category]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table 1_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="20" uuid="c8ceb560-4182-4999-bb95-b879c89385be"/>
+								<textElement>
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[Tota Overheads]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="Table 1_TD" height="18">
+							<textField>
+								<reportElement x="0" y="0" width="120" height="18" uuid="d9f3b963-6f6d-46fb-9049-32e9897aa572"/>
+								<textElement>
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{overhead_category}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="202c5a44-237d-4f80-9232-f93c4dd94689">
+						<jr:tableHeader style="Table 1_TH" height="2"/>
+						<jr:tableFooter style="Table 1_TH" height="2"/>
+						<jr:columnHeader style="Table 1_CH" height="38">
+							<staticText>
+								<reportElement x="0" y="0" width="130" height="38" uuid="3031592b-1335-4330-bf67-e6150ab42f55"/>
+								<textElement>
+									<font size="14" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Overhead Amount Rs.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table 1_CH" height="20">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="130" height="20" uuid="fd15218b-772b-4537-8f03-bff226b60200"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalOverhead}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table 1_TD" height="18">
+							<textField pattern="#,##0.00#;(-#,##0.00#)">
+								<reportElement x="0" y="0" width="130" height="18" uuid="b2431347-badf-4ca5-9c0d-2bb84a7dfa22"/>
+								<textElement textAlignment="Right">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{expenseamount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="-11" y="0" width="340" height="31" uuid="ba2133d0-1d87-428e-a427-4f653e544663"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Monthly Overheads :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="75" width="140" height="22" forecolor="#FFFFFF" backcolor="#006699" uuid="da8d158f-2bbf-4f00-9980-d1059c6ead43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Shop Profit Rs:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement mode="Opaque" x="420" y="75" width="130" height="22" forecolor="#FFFFFF" backcolor="#006699" uuid="8d410b0e-7018-4409-b4a4-bb8ccb68924e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grossprofit}-$F{expenseamount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="9e3e3f4d-dbc1-4d00-b20f-1f781da201ec"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="e363ebd3-295d-45ca-9fc2-ad82a134b138"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2b4f5482-766c-46db-8f70-89693de8fdc9"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="4" width="148" height="13" uuid="b1b7425b-81ec-439e-a0c9-62b9bdcc0988">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{printedBy}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="102" y="4" width="78" height="13" forecolor="#000000" uuid="778a44d0-6802-42ed-a263-fb5f1a51831f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Courier New"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[Printed By :]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

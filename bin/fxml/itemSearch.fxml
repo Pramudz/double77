@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainPane" minHeight="0.0" minWidth="0.0" onKeyPressed="#keyActionMaker" prefHeight="688.0" prefWidth="997.0" stylesheets="@../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pharmacySystem.itemSearch.ItemSearchMainController">
+   <children>
+      <JFXTextField fx:id="searchField" layoutX="221.0" layoutY="59.0" onKeyPressed="#keyActionMaker" prefHeight="31.0" prefWidth="458.0" promptText="Search Items Here" />
+      <TableView fx:id="itemSearchTable" layoutX="14.0" layoutY="116.0" onKeyPressed="#keyActionMaker" prefHeight="560.0" prefWidth="973.0" stylesheets="@application.css">
+         <columns>
+            <TableColumn fx:id="itemMaspluCol" prefWidth="121.0" text="PLU" />
+            <TableColumn fx:id="itemMasDesCol" prefWidth="434.0" text="ITEM DESC" />
+            <TableColumn fx:id="itemMasPriceCol" prefWidth="148.0" text="UNIT PRICE" />
+            <TableColumn fx:id="itemMasDisCol" prefWidth="148.0" text="DISCOUNT" />
+            <TableColumn fx:id="itemMasqtyCol" prefWidth="121.0" text="OHQTY" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

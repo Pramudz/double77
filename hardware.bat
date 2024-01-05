@@ -1,0 +1,1 @@
+java -jar C:\Users\Pramudz\Desktop\FinalSystem\InventorySystem\target\inventoryManagement-0.0.1-SNAPSHOT-shaded.jar

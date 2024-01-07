@@ -28,11 +28,13 @@ public class Customer implements Serializable {
 	// Modified on 08th October - Pramud - Ui to be changed
 	@Column(name="company_name")
 	private String companyName;
-	
-	@Column(name="nic_number", unique = true)
+	// kanishk 2024-01-07 
+        // remove uniqe keys double 7
+	@Column(name="nic_number")
 	private String nicNumber;
-	
-	@Column(name="customer_mobile" , unique = true)
+	// kanishk 2024-07-01 
+        // remove uniqe keys double 7
+	@Column(name="customer_mobile")
 	private String customerMobile;
 	
 	// Only for double 77 Car Audio in the UI section mention as Vehicle Type
@@ -40,7 +42,9 @@ public class Customer implements Serializable {
 	@Column(name="telephone")
 	private String customerTelephone;
 	
-	@Column(name="customer_email", unique = true , nullable = true)
+        // kanishk 2024-01-07 
+        // remove uniqe keys double 7
+	@Column(name="customer_email",  nullable = true)
 	private String customerEmail;
 	
 	@Column(name="street_address")

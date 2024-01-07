@@ -794,17 +794,26 @@ public class BillingController implements Initializable {
                         return;
                     }
                 }
-
-                double quantity = Double.valueOf(qty.getText());
-                double discountPresentage = Double.valueOf(discTextField.getText());
                 
+                // kanishka(2024-01-07) request double 7
+                // discount taken as amount
+                  double quantity = Double.valueOf(qty.getText());
+//                double discountPresentage = Double.valueOf(discTextField.getText());
+                  double discountValue = Double.valueOf(discTextField.getText());
+                  double discountPresentage = (discountValue /temporyProduct.getUnit_price()) *100 ;               
 
-                if (discountPresentage > temporyProduct.getDiscount()) {
-                    AlertHandler.getAlert(AlertType.ERROR, "Max DiscountError",
-                            "Only Allowable Max Discount is :" + temporyProduct.getDiscount());
-                    return;
-                }
+//                if (discountPresentage > temporyProduct.getDiscount()) {
+//                    AlertHandler.getAlert(AlertType.ERROR, "Max DiscountError",
+//                            "Only Allowable Max Discount is :" + temporyProduct.getDiscount());
+//                    return;
+//                }
 
+//                      if (discountPresentage > temporyProduct.getDiscount()) {
+//                    AlertHandler.getAlert(AlertType.ERROR, "Max DiscountError",
+//                            "Only Allowable Max Discount is :" + temporyProduct.getDiscount());
+//                    return;
+//                }
+                
                 if (quantity <= 0 || (!snField.getText().isBlank() && quantity > 1)) {
                     AlertHandler.getAlert(AlertType.ERROR, "InValid Number", null);
                 } else {
@@ -824,25 +833,35 @@ public class BillingController implements Initializable {
                     String serialNo = snField.getText();
                     
                     if (warranty.isBlank() || warranty.isEmpty()) {
-                    	warranty = "No Warranty";
+                    	warranty = "";
                     }
                     
                     if (serialNo.isBlank() || serialNo.isEmpty()) {
-                    	serialNo = "No SN";
+                    	serialNo = "";
                     }
                     salesDet.setWarrantyPeriod(warranty);
                     salesDet.setSerialNo(serialNo);
                     // End 
-
+                  
                     if (discountPresentage > 0) {
-                        salesDet.setDiscountPercentage(discountPresentage);
+//                        salesDet.setDiscountPercentage(discountPresentage);
+//                        double realDiscountPersentage = discountPresentage / 100;
+//                        double actualUnitPrice = temporyProduct.getUnit_price();
+//                        double discountValue = actualUnitPrice * realDiscountPersentage;
+//                        double discountedPrice = actualUnitPrice - discountValue;
+//                        salesDet.setDiscountedPrice(discountedPrice);
+//                        salesDet.setDiscount(discountValue * quantity);
+//                        salesDet.setItemAmount(discountedPrice * quantity);
+                        
+                        
                         double realDiscountPersentage = discountPresentage / 100;
                         double actualUnitPrice = temporyProduct.getUnit_price();
-                        double discountValue = actualUnitPrice * realDiscountPersentage;
-                        double discountedPrice = actualUnitPrice - discountValue;
+                        double discountValueItem = actualUnitPrice * realDiscountPersentage;
+                        double discountedPrice = actualUnitPrice - discountValueItem;
                         salesDet.setDiscountedPrice(discountedPrice);
-                        salesDet.setDiscount(discountValue * quantity);
+                        salesDet.setDiscount(discountValueItem * quantity);
                         salesDet.setItemAmount(discountedPrice * quantity);
+                        salesDet.setDiscountPercentage(discountPresentage);
                     } else {
                         salesDet.setItemAmount(salesDet.getUnitPrice() * quantity);
                         salesDet.setDiscountedPrice(salesDet.getUnitPrice());
@@ -1004,15 +1023,17 @@ public class BillingController implements Initializable {
                         return;
                     }
                 }
-
+                // kanishka(2024-01-07) request double 7 
+                // discount taken as amount               
                 double quantity = Double.valueOf(qty.getText());
-                double discountPresentage = Double.valueOf(discTextField.getText());
+//                double discountPresentage = Double.valueOf(discTextField.getText());
+                double discountValue = Double.valueOf(discTextField.getText());
 
-                if (discountPresentage > temporyProduct.getDiscount()) {
-                    AlertHandler.getAlert(AlertType.ERROR, "Max DiscountError",
-                            "Only Allowable Max Discount is :" + temporyProduct.getDiscount());
-                    return;
-                }
+//                if (discountPresentage > temporyProduct.getDiscount()) {
+//                    AlertHandler.getAlert(AlertType.ERROR, "Max DiscountError",
+//                            "Only Allowable Max Discount is :" + temporyProduct.getDiscount());
+//                    return;
+//                }
 
                 if (quantity <= 0 || (!snField.getText().isBlank() && quantity > 1)) {
                     AlertHandler.getAlert(AlertType.ERROR, "Invalid Number", null);
@@ -1034,24 +1055,27 @@ public class BillingController implements Initializable {
                     String serialNo = snField.getText();
                     
                     if (warranty.isBlank() || warranty.isEmpty()) {
-                    	warranty = "No Warranty";
+                    	warranty = "";
                     }
                     
                     if (serialNo.isBlank() || serialNo.isEmpty()) {
-                    	serialNo = "No SN";
+                    	serialNo = "";
                     }
                     salesDet.setWarrantyPeriod(warranty);
                     salesDet.setSerialNo(serialNo);
                     // End 
                     
+                    
+                    
+                    double discountPresentage = (discountValue/temporyProduct.getUnit_price())*100;
                     if (discountPresentage > 0) {
                         salesDet.setDiscountPercentage(discountPresentage);
                         double realDiscountPersentage = discountPresentage / 100;
                         double actualUnitPrice = temporyProduct.getUnit_price();
-                        double discountValue = actualUnitPrice * realDiscountPersentage;
-                        double discountedPrice = actualUnitPrice - discountValue;
+                        double itemdiscountValue = actualUnitPrice * realDiscountPersentage;
+                        double discountedPrice = actualUnitPrice - itemdiscountValue;
                         salesDet.setDiscountedPrice(discountedPrice);
-                        salesDet.setDiscount(discountValue * quantity);
+                        salesDet.setDiscount(itemdiscountValue * quantity);
                         salesDet.setItemAmount(discountedPrice * quantity);
                     } else {
                         salesDet.setItemAmount(salesDet.getUnitPrice() * quantity);
@@ -1233,10 +1257,26 @@ public class BillingController implements Initializable {
 
         //JasperViewer.viewReport(jp, false);
     }
+    
+    // get paymodes toString
+    private String getPayModesString( ObservableList<POSPayDetails> payDetails){
+       
+       String paymode = "";       
+       for(int i = 0; i < payDetails.size(); i++){
+           POSPayDetails paydetail = payDetails.get(i);
+           paymode = paymode.concat(paydetail.getPayMode().getModeId());
+           
+           if(i != payDetails.size()-1){
+            paymode = paymode.concat("/");
+           }
+           
+       } 
+       return paymode;
+    }
 
     private void printJasperReceiptcheck(ObservableList<SalesDetails> salesDetList, Sales sales,
             ObservableList<POSPayDetails> payDetails) throws JRException, SQLException {
-       
+            
     	java.sql.Date date = sales.getSalesId().getDate();
 		String userName = sales.getSalesId().getUser_id().getUserName();
 		long billNo = sales.getSalesId().getBill_no();
@@ -1249,7 +1289,11 @@ public class BillingController implements Initializable {
         parameters.put("billNo", Long.valueOf(sales.getSalesId().getBill_no()));
         parameters.put("customerFname", sales.getCustomer().getFirstName());
         parameters.put("customerPhone", sales.getCustomer().getCustomerMobile());
+        parameters.put("customerStreetAd", sales.getCustomer().getStreetAddress());
+        parameters.put("customerAdLin2", sales.getCustomer().getAddressLine02());
+        parameters.put("customerCity", sales.getCustomer().getCity());
 		parameters.put("billNo", billNo);
+                parameters.put("billPaymode", getPayModesString(payDetails));
 		parameters.put("userName", userName);
 		parameters.put("date", date);
 		

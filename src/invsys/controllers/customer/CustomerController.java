@@ -512,8 +512,9 @@ public class CustomerController implements Initializable {
 
     	//if (validateForm()) - Removed as requseted by Double 77 Car audio
     	
-        if (ValidateInputs.validateUserNames(firstNameField, "First Name Field")
-                & ValidateInputs.validateUserNames(lastNameField, "last Name Field") & ValidateInputs.validateTelphoneNumbers(contactNumField, "Mobile Number Field") ) {
+//        if (ValidateInputs.validateUserNames(firstNameField, "First Name Field")  - Removed as requseted by Double 77 Car audio
+//                & ValidateInputs.validateUserNames(lastNameField, "last Name Field") & ValidateInputs.validateTelphoneNumbers(contactNumField, "Mobile Number Field") ) {
+               if (ValidateInputs.validateUserNames(firstNameField, "First Name Field")) {
             try {
                 String fName = firstNameField.getText();
                 String lName = lastNameField.getText();
@@ -552,37 +553,37 @@ public class CustomerController implements Initializable {
                 List<Customer> cutomerCheckDuplicatetList = customerDao.getCustomerByNicEmailContactNum(nic, email,
                         mobNumber);
 
-                if (!cutomerCheckDuplicatetList.isEmpty()) {
-                    AlertHandler.getAlert(AlertType.ERROR, "Duplicate Entry Error",
-                            "" + "You Have Entered Duplicate Entries to the Customer Form");
-                    for (Customer x : cutomerCheckDuplicatetList) {
-                        if (x.getCustomerMobile().equals(mobNumber)) {
-                            contactNumField.getStyleClass().add("danger-for-warning");
-                            contactNumLabel.setText("another customer is exist with the same mobile number");
-                        }
-
-                        if (x.getCustomerEmail() != null) {
-                            if (x.getCustomerEmail().equals(email)) {
-                                emailField.getStyleClass().add("danger-for-warning");
-                                emailLabel.setText("another customer is exist with the same email");
-
-                            }
-
-                        }
-
-                        
-                        if (!nic.trim().equals("") || !nic.equals(null) || !nic.isBlank()) {
-                        	 if (x.getNicNumber().equalsIgnoreCase(nic)) {
-                                 nicField.getStyleClass().add("danger-for-warning");
-                                 nicLabel.setText("another customer is exist with the same NIC");
-                             }
-                       }
-                        
-                       
-
-                    }
-                    return;
-                }
+//                if (!cutomerCheckDuplicatetList.isEmpty()) {
+//                    AlertHandler.getAlert(AlertType.ERROR, "Duplicate Entry Error",
+//                            "" + "You Have Entered Duplicate Entries to the Customer Form");
+//                    for (Customer x : cutomerCheckDuplicatetList) {
+//                        if (x.getCustomerMobile().equals(mobNumber)) {
+//                            contactNumField.getStyleClass().add("danger-for-warning");
+//                            contactNumLabel.setText("another customer is exist with the same mobile number");
+//                        }
+//
+//                        if (x.getCustomerEmail() != null) {
+//                            if (x.getCustomerEmail().equals(email)) {
+//                                emailField.getStyleClass().add("danger-for-warning");
+//                                emailLabel.setText("another customer is exist with the same email");
+//
+//                            }
+//
+//                        }
+//
+//                        
+//                        if (!nic.trim().equals("") || !nic.equals(null) || !nic.isBlank()) {
+//                        	 if (x.getNicNumber().equalsIgnoreCase(nic)) {
+//                                 nicField.getStyleClass().add("danger-for-warning");
+//                                 nicLabel.setText("another customer is exist with the same NIC");
+//                             }
+//                       }
+//                        
+//                       
+//
+//                    }
+//                    return;
+//                }
 
                 customer.setCustomerMobile(mobNumber);
                 customer.setCustomerTelephone(telNumber);

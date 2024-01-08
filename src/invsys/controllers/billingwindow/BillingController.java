@@ -99,6 +99,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class BillingController implements Initializable {
@@ -1304,6 +1305,10 @@ public class BillingController implements Initializable {
 	   
 	   JasperPrint jp = JasperFillManager.fillReport(reportLoc, parameters,connectionForReports);
 	
+           jp.setOrientation(OrientationEnum.LANDSCAPE);
+           jp.setPageHeight(418);
+           jp.setPageWidth(590);
+           
        JasperPrintManager.printReport(jp, false);
 
        

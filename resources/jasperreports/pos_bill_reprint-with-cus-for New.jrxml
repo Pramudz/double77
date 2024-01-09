@@ -4,7 +4,7 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="192"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="797"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -29,108 +29,119 @@
 	<parameter name="billPaymode" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 
-s_mass.bill_no as billNo, s_mass.sales_date as salesDate , u.user_name as userName, customer_mobile as cust_mobile,cus.first_name as customerFname , cus.telephone as customerTel,
+s_mass.bill_no as billNo, s_mass.sales_date as salesDate , u.user_name as userName, customer_mobile as cust_mobile,cus.first_name as customerFname,cus.last_name as customerLname , cus.telephone as customerTel,
 cus.company_name as customerCompanyName,s_det.seq_no as seqNo , prd.prd_id as prdId, prd.p_name as prdName , s_det.unit_price as unitPrice, s_det.sales_qty as salesQty ,
 s_det.gross_item_amount as itemGrossAmount,s_det.discount_percentage as discountPercentage ,round(s_det.discount) as discount, s_det.item_net_amount as itemNetAmount,
 s_det.item_cancel_status as itemCancelStatus , s_mass.balance as balance ,s_det.warranty_period as warranty, s_det.serial_no as serialno
 from sales s_mass inner join sales_detail s_det on s_det.bill_no=s_mass.bill_no and s_det.sales_date=s_mass.sales_date and s_det.user_id=s_mass.user_id
 inner join users u on u.user_id=s_mass.user_id inner join products prd on prd.prd_id=s_det.product_id inner join customer cus on cus.customer_id=s_mass.customerId where s_mass.cancel_status=false and u.user_name=$P{userName}
-and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
-
-
-]]>
+and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;]]>
 	</queryString>
 	<field name="billNo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="bill_no"/>
 		<property name="com.jaspersoft.studio.field.label" value="billNo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
-		<property name="com.jaspersoft.studio.field.name" value="bill_no"/>
 	</field>
 	<field name="salesDate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="sales_date"/>
 		<property name="com.jaspersoft.studio.field.label" value="salesDate"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
-		<property name="com.jaspersoft.studio.field.name" value="sales_date"/>
 	</field>
 	<field name="userName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="user_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="userName"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="users"/>
-		<property name="com.jaspersoft.studio.field.name" value="user_name"/>
+	</field>
+	<field name="cust_mobile" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_mobile"/>
+		<property name="com.jaspersoft.studio.field.label" value="cust_mobile"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
 	</field>
 	<field name="customerFname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="customerFname"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
-		<property name="com.jaspersoft.studio.field.name" value="first_name"/>
+	</field>
+	<field name="customerLname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="last_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="customerLname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
 	</field>
 	<field name="customerTel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telephone"/>
 		<property name="com.jaspersoft.studio.field.label" value="customerTel"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
-		<property name="com.jaspersoft.studio.field.name" value="telephone"/>
 	</field>
 	<field name="customerCompanyName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="company_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="customerCompanyName"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
-		<property name="com.jaspersoft.studio.field.name" value="company_name"/>
 	</field>
 	<field name="seqNo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="seq_no"/>
 		<property name="com.jaspersoft.studio.field.label" value="seqNo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="seq_no"/>
 	</field>
 	<field name="prdId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="prd_id"/>
 		<property name="com.jaspersoft.studio.field.label" value="prdId"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
-		<property name="com.jaspersoft.studio.field.name" value="prd_id"/>
 	</field>
 	<field name="prdName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="p_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="prdName"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="products"/>
-		<property name="com.jaspersoft.studio.field.name" value="p_name"/>
 	</field>
 	<field name="unitPrice" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="unit_price"/>
 		<property name="com.jaspersoft.studio.field.label" value="unitPrice"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="unit_price"/>
 	</field>
 	<field name="salesQty" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="sales_qty"/>
 		<property name="com.jaspersoft.studio.field.label" value="salesQty"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="sales_qty"/>
 	</field>
 	<field name="itemGrossAmount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="gross_item_amount"/>
 		<property name="com.jaspersoft.studio.field.label" value="itemGrossAmount"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="gross_item_amount"/>
 	</field>
 	<field name="discountPercentage" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="discount_percentage"/>
 		<property name="com.jaspersoft.studio.field.label" value="discountPercentage"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="discount_percentage"/>
+	</field>
+	<field name="discount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="discount"/>
+		<property name="com.jaspersoft.studio.field.label" value="discount"/>
 	</field>
 	<field name="itemNetAmount" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="item_net_amount"/>
 		<property name="com.jaspersoft.studio.field.label" value="itemNetAmount"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="item_net_amount"/>
 	</field>
 	<field name="itemCancelStatus" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="item_cancel_status"/>
 		<property name="com.jaspersoft.studio.field.label" value="itemCancelStatus"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
-		<property name="com.jaspersoft.studio.field.name" value="item_cancel_status"/>
 	</field>
 	<field name="balance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="balance"/>
 		<property name="com.jaspersoft.studio.field.label" value="balance"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales"/>
-		<property name="com.jaspersoft.studio.field.name" value="balance"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="warranty" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="warranty_period"/>
 		<property name="com.jaspersoft.studio.field.label" value="warranty"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
 	</field>
 	<field name="serialno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="serial_no"/>
 		<property name="com.jaspersoft.studio.field.label" value="serialno"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sales_detail"/>
 	</field>
-	<field name="discount" class="java.lang.Double"/>
-	<field name="cust_mobile" class="java.lang.String"/>
 	<variable name="totalDiscount" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{itemGrossAmount}-$F{itemNetAmount}]]></variableExpression>
 	</variable>
@@ -172,8 +183,8 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 	</background>
 	<title>
 		<band height="160">
-			<image>
-				<reportElement x="0" y="0" width="594" height="99" uuid="1d648385-e05a-43cc-972d-4b165a463e52"/>
+			<image vAlign="Top">
+				<reportElement x="0" y="0" width="595" height="99" uuid="1d648385-e05a-43cc-972d-4b165a463e52"/>
 				<imageExpression><![CDATA["/resources/images/Header.png"]]></imageExpression>
 			</image>
 			<staticText>
@@ -231,13 +242,13 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Payment Status:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="90" y="92" width="128" height="15" uuid="601c17a5-e2e7-4899-aca3-e2bc9ecd7c50">
+				<reportElement x="90" y="92" width="150" height="15" uuid="601c17a5-e2e7-4899-aca3-e2bc9ecd7c50">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{customerFname}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{customerFname}+" "+$F{customerLname}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="418" y="108" width="72" height="15" forecolor="#000000" uuid="1cde741b-c8c2-4f3d-a625-76e1b0bb264e">
@@ -334,7 +345,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 	<columnHeader>
 		<band height="17">
 			<staticText>
-				<reportElement x="390" y="0" width="74" height="10" forecolor="#000000" uuid="4662cd87-9f6d-4d54-b93e-19bb4522c89f">
+				<reportElement x="388" y="0" width="62" height="10" forecolor="#000000" uuid="4662cd87-9f6d-4d54-b93e-19bb4522c89f">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -344,7 +355,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Gross Amount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="466" y="0" width="55" height="10" forecolor="#000000" uuid="ef308af5-3b16-4aab-aa42-976f809e38ad">
+				<reportElement x="449" y="0" width="56" height="10" forecolor="#000000" uuid="ef308af5-3b16-4aab-aa42-976f809e38ad">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -354,7 +365,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Discount]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="86" y="0" width="134" height="10" forecolor="#000000" uuid="017cde37-516a-469f-afe7-f0916b037bb3">
+				<reportElement positionType="Float" x="96" y="0" width="165" height="10" forecolor="#000000" uuid="017cde37-516a-469f-afe7-f0916b037bb3">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -364,7 +375,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Item Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="280" y="0" width="68" height="10" forecolor="#000000" uuid="9073207d-a675-4047-a5dc-6027434bd606">
+				<reportElement positionType="Float" x="300" y="0" width="50" height="10" forecolor="#000000" uuid="9073207d-a675-4047-a5dc-6027434bd606">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -374,7 +385,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="0" width="40" height="10" forecolor="#000000" uuid="ece58673-80f1-4270-bd4d-af4175ef483a">
+				<reportElement x="349" y="0" width="40" height="10" forecolor="#000000" uuid="ece58673-80f1-4270-bd4d-af4175ef483a">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -384,7 +395,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="220" y="0" width="60" height="10" forecolor="#000000" uuid="939021bd-9402-40c1-ade4-ff24137ff246">
+				<reportElement positionType="Float" x="261" y="0" width="40" height="10" forecolor="#000000" uuid="939021bd-9402-40c1-ade4-ff24137ff246">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -394,7 +405,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Warranty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="0" width="30" height="11" forecolor="#000000" uuid="45d09904-8acc-45a8-a783-dbbac0463143">
+				<reportElement positionType="Float" x="20" y="0" width="19" height="11" forecolor="#000000" uuid="45d09904-8acc-45a8-a783-dbbac0463143">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -404,7 +415,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[#]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="30" y="0" width="56" height="10" forecolor="#000000" uuid="6b59eab0-a7fa-4bd4-a969-23e0d960cc93">
+				<reportElement positionType="Float" x="40" y="0" width="56" height="10" forecolor="#000000" uuid="6b59eab0-a7fa-4bd4-a969-23e0d960cc93">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -414,7 +425,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Item Code]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="524" y="0" width="70" height="10" forecolor="#000000" uuid="cded606e-a1c4-4437-ac94-01a6379ec7a8">
+				<reportElement x="505" y="0" width="74" height="10" forecolor="#000000" uuid="cded606e-a1c4-4437-ac94-01a6379ec7a8">
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -433,7 +444,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 	<detail>
 		<band height="20">
 			<textField>
-				<reportElement x="0" y="0" width="30" height="20" uuid="d4f2a0ed-a36a-457f-8db0-a130e197bb64">
+				<reportElement x="22" y="0" width="19" height="20" uuid="d4f2a0ed-a36a-457f-8db0-a130e197bb64">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -444,7 +455,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{seqNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="0" width="56" height="20" uuid="5ba0a176-a85f-45a5-a7de-ed5a2ebb430a">
+				<reportElement x="40" y="0" width="56" height="20" uuid="5ba0a176-a85f-45a5-a7de-ed5a2ebb430a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
@@ -454,7 +465,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{prdId}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="86" y="0" width="134" height="20" uuid="4017e7fd-f5c1-47fb-a702-7330672e0b4f">
+				<reportElement x="96" y="0" width="165" height="20" uuid="4017e7fd-f5c1-47fb-a702-7330672e0b4f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" markup="styled">
@@ -464,7 +475,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{prdName}+"<br/>"+($F{serialno}.equals("") ? "": "SN -"+  $F{serialno})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00#;(#,###.00#)">
-				<reportElement x="280" y="0" width="68" height="20" uuid="cfde197e-cac9-4ebc-83e6-6c98702eda24">
+				<reportElement x="300" y="0" width="50" height="20" uuid="cfde197e-cac9-4ebc-83e6-6c98702eda24">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -475,8 +486,9 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{unitPrice}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00#;(#,###.00#)">
-				<reportElement x="390" y="0" width="76" height="20" uuid="4402bc44-57dd-4b19-91f4-1ce2b615a89c">
+				<reportElement x="388" y="0" width="62" height="20" uuid="4402bc44-57dd-4b19-91f4-1ce2b615a89c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
@@ -485,8 +497,9 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[($F{itemCancelStatus} == true ? 0 : $F{itemGrossAmount})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="467" y="0" width="57" height="20" uuid="cdd69029-02a5-47b1-b19e-2566d760a2ee">
+				<reportElement x="449" y="0" width="56" height="20" uuid="cdd69029-02a5-47b1-b19e-2566d760a2ee">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
@@ -495,7 +508,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="40" height="20" uuid="3041dce5-55a8-478f-b774-1ceadcfe1c87">
+				<reportElement x="349" y="0" width="40" height="20" uuid="3041dce5-55a8-478f-b774-1ceadcfe1c87">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -505,20 +518,21 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$F{salesQty}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="0" width="60" height="20" uuid="f766a269-7a51-4a3a-8bec-4ed5a2280fef">
+				<reportElement x="261" y="0" width="40" height="20" uuid="f766a269-7a51-4a3a-8bec-4ed5a2280fef">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{warranty}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00#;(#,###.00#)">
-				<reportElement x="524" y="0" width="70" height="20" uuid="97e246a8-0632-42d5-aaf0-18bca1a299fe">
+				<reportElement x="505" y="0" width="74" height="20" uuid="97e246a8-0632-42d5-aaf0-18bca1a299fe">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
@@ -533,7 +547,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 	</columnFooter>
 	<pageFooter>
 		<band height="80">
-			<image>
+			<image hAlign="Center" vAlign="Bottom">
 				<reportElement x="0" y="0" width="595" height="80" uuid="a306588e-aedc-4a06-abbe-1d65ce0aed26"/>
 				<imageExpression><![CDATA["/resources/images/Footer.png"]]></imageExpression>
 			</image>
@@ -543,14 +557,14 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 		<band height="75">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="431" y="0" width="84" height="20" uuid="d460bfc2-5f45-47bd-9ec5-4e89c01f2acb"/>
+				<reportElement x="416" y="0" width="84" height="20" uuid="d460bfc2-5f45-47bd-9ec5-4e89c01f2acb"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Discount Rs:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00#;(#,##0.00#)">
-				<reportElement x="521" y="0" width="72" height="19" uuid="d7c69a31-6f99-4c19-81e1-859b57beb3ca">
+				<reportElement x="506" y="0" width="72" height="19" uuid="d7c69a31-6f99-4c19-81e1-859b57beb3ca">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
@@ -561,7 +575,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$V{totalDiscount}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00#;(#,###.00#)">
-				<reportElement x="521" y="20" width="72" height="16" uuid="4d36c7e8-0947-432f-a580-5d384db45c1a">
+				<reportElement x="506" y="20" width="72" height="16" uuid="4d36c7e8-0947-432f-a580-5d384db45c1a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
@@ -572,14 +586,14 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$V{totalGrossAmount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="431" y="20" width="84" height="16" uuid="00c2b29e-b80e-469b-9712-920cfec85eb2"/>
+				<reportElement x="416" y="20" width="84" height="16" uuid="00c2b29e-b80e-469b-9712-920cfec85eb2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Sub Total Rs:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="431" y="36" width="84" height="16" uuid="be059148-4922-4816-a7ae-5f16f6e90006">
+				<reportElement x="416" y="36" width="84" height="16" uuid="be059148-4922-4816-a7ae-5f16f6e90006">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -588,7 +602,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Total Rs :]]></text>
 			</staticText>
 			<textField pattern="#,###.00#;(#,###.00#)">
-				<reportElement x="521" y="36" width="72" height="16" uuid="995d9efd-6032-4af0-8f89-731a23c7a242">
+				<reportElement x="506" y="36" width="72" height="16" uuid="995d9efd-6032-4af0-8f89-731a23c7a242">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -600,7 +614,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<textFieldExpression><![CDATA[$V{totalNetValue}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="431" y="52" width="84" height="16" uuid="469d885c-c38a-4a40-8bd4-de978e199751">
+				<reportElement x="416" y="52" width="84" height="16" uuid="469d885c-c38a-4a40-8bd4-de978e199751">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -609,7 +623,7 @@ and s_mass.bill_no=$P{billNo} and s_mass.sales_date=$P{date} order by seqNo;
 				<text><![CDATA[Change Rs:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00#;(#,##0.00#)">
-				<reportElement x="521" y="52" width="72" height="16" uuid="2e538206-6233-4557-a6a7-26cc55eea1d5">
+				<reportElement x="506" y="52" width="72" height="16" uuid="2e538206-6233-4557-a6a7-26cc55eea1d5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>

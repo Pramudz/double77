@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cashRegistrySignOff" pageWidth="612" pageHeight="396" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb16e889-a1fc-4412-bc2d-b74f7d5b2ff5">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -11,16 +11,18 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Testing Adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<parameter name="totalCashSales" class="java.lang.Double"/>
 	<parameter name="userId" class="java.lang.Long"/>
 	<parameter name="registryDate" class="java.sql.Date"/>
+	<parameter name="companyName" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select p.pay_mode, p.sub_pay_mode, case when p.pay_mode = 'cash' then sum(p.amount-s.balance) else sum(p.amount) end as value, c.opening_cash_balance, c.closingCashBalance, c.user_name ,c.registry_date 
- from pos_pay_detail p inner join sales s on 
- s.sales_date=p.sales_date and s.user_id=p.user_id and s.bill_no=p.bill_no 
- inner join cash_register c on c.user_id=s.user_id and c.registry_date = p.sales_date
-  where s.cancel_status=false and p.sales_date =$P{registryDate} and p.user_id=$P{userId} group by p.sub_pay_mode]]>
+		<![CDATA[ select p.pay_mode, p.sub_pay_mode, sum(cusref.net_refund_amount) as samedayposrefund, (select sum(alref.net_refund_amount) from customer_refunds alref where alref.refund_date=$P{registryDate}) as allrefund,
+case when p.pay_mode = 'cash' then sum(p.amount-s.balance) else sum(p.amount) end as value, c.opening_cash_balance, c.closingCashBalance, c.user_name ,c.registry_date 
+from pos_pay_detail p inner join sales s on 
+s.sales_date=p.sales_date and s.user_id=p.user_id and s.bill_no=p.bill_no 
+inner join cash_register c on c.user_id=s.user_id and c.registry_date = p.sales_date inner join customer_refunds cusref on cusref.bill_no=s.bill_no and cusref.user_id=s.user_id and cusref.sales_date=s.sales_date
+where s.cancel_status=false and p.sales_date =$P{registryDate}  and p.user_id=$P{userId} group by p.sub_pay_mode]]>
 	</queryString>
 	<field name="pay_mode" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="pay_mode"/>
@@ -31,6 +33,14 @@
 		<property name="com.jaspersoft.studio.field.name" value="sub_pay_mode"/>
 		<property name="com.jaspersoft.studio.field.label" value="sub_pay_mode"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pos_pay_detail"/>
+	</field>
+	<field name="samedayposrefund" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="samedayposrefund"/>
+		<property name="com.jaspersoft.studio.field.label" value="samedayposrefund"/>
+	</field>
+	<field name="allrefund" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="allrefund"/>
+		<property name="com.jaspersoft.studio.field.label" value="allrefund"/>
 	</field>
 	<field name="value" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="value"/>
@@ -74,13 +84,13 @@
 					<text><![CDATA[Cashier Sign Off]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="17" y="7" width="223" height="82" forecolor="#000000" uuid="dd8f9806-64de-4805-8765-96322fe7922b"/>
+					<reportElement x="21" y="35" width="199" height="54" forecolor="#000000" uuid="dd8f9806-64de-4805-8765-96322fe7922b"/>
 					<textElement>
 						<font size="12"/>
 						<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
 					</textElement>
 					<text><![CDATA[Cash Drawer Summary
-UB Hardware]]></text>
+]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="305" y="35" width="80" height="22" forecolor="#000000" uuid="44d699af-007d-41e0-8dfb-4603591fc0d1"/>
@@ -111,8 +121,17 @@ UB Hardware]]></text>
 					<textFieldExpression><![CDATA[$F{registry_date}]]></textFieldExpression>
 				</textField>
 				<textField pattern="MMMMM dd, yyyy">
-					<reportElement x="473" y="2" width="100" height="30" uuid="f80be043-7586-4058-935e-e395abe8bca7"/>
+					<reportElement x="468" y="4" width="100" height="30" uuid="f80be043-7586-4058-935e-e395abe8bca7"/>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="21" y="10" width="199" height="20" uuid="0d56ace5-40f0-4fba-a480-ac421a5ff6d2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -186,31 +205,31 @@ UB Hardware]]></text>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="48" splitType="Stretch">
+		<band height="76" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
 			<staticText>
-				<reportElement x="360" y="4" width="90" height="17" uuid="14a45762-42e3-489e-808b-a54ce2b5e613"/>
+				<reportElement x="369" y="4" width="90" height="17" uuid="14a45762-42e3-489e-808b-a54ce2b5e613"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Exess/Shortage :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="191" y="6" width="69" height="17" uuid="92400ae1-6c5e-4bad-be1b-b7b9e42c67d4"/>
+				<reportElement x="191" y="6" width="69" height="18" uuid="92400ae1-6c5e-4bad-be1b-b7b9e42c67d4"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Cash :]]></text>
+				<text><![CDATA[Cash Sale :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="6" width="114" height="17" uuid="837ae456-0262-4c9c-a6bf-e34e6e9692bf"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Closing Cash :]]></text>
+				<text><![CDATA[Closing Cash Balance :]]></text>
 			</staticText>
 			<textField pattern="#,##0.00#;(-#,##0.00#)">
-				<reportElement x="115" y="4" width="106" height="20" uuid="0781c45b-ad97-4b31-89db-a41973f050d4"/>
+				<reportElement x="118" y="4" width="65" height="20" uuid="0781c45b-ad97-4b31-89db-a41973f050d4"/>
 				<textElement>
 					<font isUnderline="true"/>
 				</textElement>
@@ -224,19 +243,37 @@ UB Hardware]]></text>
 				<textFieldExpression><![CDATA[$P{totalCashSales}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00#;(-#,##0.00#)">
-				<reportElement x="457" y="3" width="106" height="20" uuid="1f18c466-4f36-4199-89af-740da4ea365b"/>
+				<reportElement x="461" y="3" width="106" height="20" uuid="1f18c466-4f36-4199-89af-740da4ea365b"/>
 				<textElement>
 					<font isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{closingCashBalance}-($P{totalCashSales}+$F{opening_cash_balance})]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="410" y="32" width="100" height="16" uuid="a9c86a14-36ea-415a-9a35-d09720c17d3d"/>
+				<reportElement x="410" y="47" width="100" height="16" uuid="a9c86a14-36ea-415a-9a35-d09720c17d3d"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="510" y="32" width="60" height="14" uuid="716c0216-518f-409a-9545-93c010015f1e"/>
+				<reportElement x="510" y="47" width="60" height="14" uuid="716c0216-518f-409a-9545-93c010015f1e"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="49" width="400" height="21" uuid="30418cc6-5ef1-4a14-81e0-e4a73df14684"/>
+				<text><![CDATA[*Please check your actual Exsess/Shortage with the Chief cashier and your manager]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="24" width="103" height="17" uuid="1ca42431-fd25-49eb-a2ed-f8e08e509cf9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Today Refunds :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(-#,##0.00#)">
+				<reportElement x="118" y="24" width="65" height="20" uuid="c019781c-d005-4cfe-b9c9-23388798a104"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{allrefund}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

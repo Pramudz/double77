@@ -176,8 +176,6 @@
                                     <Label fx:id="fnameLabel" prefHeight="30.0" prefWidth="241.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <Label fx:id="lnameLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <Label fx:id="nicLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <Label fx:id="contactNumLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Label fx:id="telphoneLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                                     <Label fx:id="emailLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                                     <Label fx:id="streetAddressLable" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                                     <Label fx:id="addressLineLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="9" />

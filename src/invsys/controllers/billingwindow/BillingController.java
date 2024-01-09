@@ -337,13 +337,13 @@ public class BillingController implements Initializable {
             }
         });
         
-        warrantyDetTxtField.setOnKeyReleased(e-> {
+        warrantyDetTxtField.setOnKeyPressed(e-> {
         	if (e.getCode().equals(KeyCode.ENTER)) {
         		qty.requestFocus();
         	}
         });
         
-        snField.setOnKeyReleased(e-> {
+        snField.setOnKeyPressed(e-> {
         	if (e.getCode().equals(KeyCode.ENTER)) {
         		warrantyDetTxtField.requestFocus();
         	}
@@ -949,7 +949,7 @@ public class BillingController implements Initializable {
 
     @FXML
     void getProduct() {
-        code.setOnKeyReleased(e -> {
+        code.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 try {
                     long codeText = Long.valueOf(code.getText());
@@ -1087,8 +1087,10 @@ public class BillingController implements Initializable {
                     temporyProduct = null;
                     salesDet = null;
                     clearData();
-                    prdDesc.getEditor().requestFocus();
+                    //prdDesc.getEditor().requestFocus();
+                    
                     refreshSummaryData();
+                    code.requestFocus();
 
                 }
             }
@@ -1305,13 +1307,9 @@ public class BillingController implements Initializable {
 	   
 	   JasperPrint jp = JasperFillManager.fillReport(reportLoc, parameters,connectionForReports);
 	
-           jp.setOrientation(OrientationEnum.LANDSCAPE);
-           jp.setPageHeight(418);
-           jp.setPageWidth(590);
-           
        JasperPrintManager.printReport(jp, false);
 
-       
+
     }
    
     

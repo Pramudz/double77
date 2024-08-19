@@ -58,5 +58,6 @@
 		<mapping class="invsys.entities.CustomerRefundDetail"/>
 		<mapping class="invsys.entities.CreditInvoiceVoid"/>
 		<mapping class="invsys.entities.CreditInvoiceVoidDetail"/>
+		<mapping class="invsys.entities.DailyOverhead"/>
 	</session-factory>
 </hibernate-configuration>

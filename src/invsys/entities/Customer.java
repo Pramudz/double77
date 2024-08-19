@@ -30,7 +30,7 @@ public class Customer implements Serializable {
 	private String companyName;
 	// kanishk 2024-01-07 
         // remove uniqe keys double 7
-	@Column(name="nic_number")
+	@Column(name="nic_number", nullable = true)
 	private String nicNumber;
 	// kanishk 2024-07-01 
         // remove uniqe keys double 7

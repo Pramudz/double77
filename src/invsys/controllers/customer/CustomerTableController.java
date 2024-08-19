@@ -118,9 +118,10 @@ public class CustomerTableController implements Initializable {
 					return true;
 				}
 				String lowerCaseFilter = newValue.toLowerCase();
-				if (customer.getNicNumber().toLowerCase().contains(lowerCaseFilter)) {
-					return true;
-				} if (customer.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+//				if (customer.getNicNumber().toLowerCase().contains(lowerCaseFilter)) {
+//					return true;
+//				} 
+                                if (customer.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
 					return true;
 				} if (customer.getCompanyName() != null) {
 					if(customer.getCompanyName().toLowerCase().contains(lowerCaseFilter)) {

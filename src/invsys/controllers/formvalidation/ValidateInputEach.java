@@ -85,7 +85,7 @@ public class ValidateInputEach {
 	public static boolean validateUserNames(TextField username , Label lable) {
 		lable.setText("");
 		username.getStyleClass().remove("danger-for-warning");
-		Pattern pattern = Pattern.compile("[a-zA-Z.]+");
+		Pattern pattern = Pattern.compile("^[A-Za-z\\s.&]*$");
 		Matcher matcher = pattern.matcher(username.getText());
 		if (matcher.matches()) {
 			lable.setText("");

@@ -193,11 +193,32 @@ public class CustomerController implements Initializable {
 
         ValidateInputEach.getInstance();
         ValidateInputs.getInstance();
+        customizeForm();
         initColumns();
         customerDao = CustomerDaoImpl.getDao();
         validateEachField();
         getTableDrawer();
 
+    }
+    
+    private void customizeForm(){
+        nicLabel.setVisible(false);
+        nicField.setVisible(false);
+        
+        addressLine02Field.setVisible(false);
+        addressLineLabel.setVisible(false);
+        
+        streetAddress.setVisible(false);
+        streetAddressLable.setVisible(false);
+        
+        emailField.setVisible(false);
+        emailLabel.setVisible(false);
+        
+        nicField.setVisible(false);
+        nicField.setVisible(false);
+        
+        cityField.setVisible(false);
+        cityLabel.setVisible(false);
     }
 
     // get loader details from MainController class in order pass data between
@@ -455,14 +476,14 @@ public class CustomerController implements Initializable {
     private boolean validateForm() {
 
         return ValidateInputs.validateUserNames(firstNameField, "First Name Field")
-                & ValidateInputs.validateUserNames(lastNameField, "last Name Field")
-                & ValidateInputs.validateNicField(nicField, "NIC Field")
-                & ValidateInputs.validateTelphoneNumbers(contactNumField, "Mobile Number Field")
-                & ValidateInputs.validateTelphoneNumbers(telphoneField, "Telephone Number Field")
-                & ValidateInputs.validateEmailEmptyAllowed(emailField, "Email Field")
-                & ValidateInputs.validateInputEmpty(streetAddress, "Street Address Field")
-                & ValidateInputs.validateInputEmpty(addressLine02Field, "Address Field")
-                & ValidateInputs.validateInputEmpty(cityField, "City Fields");
+//                & ValidateInputs.validateUserNames(lastNameField, "last Name Field")
+//                & ValidateInputs.validateNicField(nicField, "NIC Field")
+                & ValidateInputs.validateTelphoneNumbers(contactNumField, "Mobile Number Field");
+//                & ValidateInputs.validateTelphoneNumbers(telphoneField, "Telephone Number Field");
+//                & ValidateInputs.validateEmailEmptyAllowed(emailField, "Email Field")
+//                & ValidateInputs.validateInputEmpty(streetAddress, "Street Address Field")
+//                & ValidateInputs.validateInputEmpty(addressLine02Field, "Address Field")
+//                & ValidateInputs.validateInputEmpty(cityField, "City Fields");
 
     }
 
@@ -476,35 +497,35 @@ public class CustomerController implements Initializable {
             ValidateInputEach.validateUserNames(lastNameField, lnameLabel);
         });
 
-        nicField.setOnKeyReleased(e -> {
-            ValidateInputEach.validateNicField(nicField, "Nic Field", nicLabel);
-        });
+//        nicField.setOnKeyReleased(e -> {
+//            ValidateInputEach.validateNicField(nicField, "Nic Field", nicLabel);
+//        });
 
         contactNumField.setOnKeyReleased(e -> {
             ValidateInputEach.validateMobileNumbers(contactNumField, contactNumLabel);
         });
 
-        telphoneField.setOnKeyReleased(e -> {
-            ValidateInputEach.validateMobileNumbers(telphoneField, telphoneLabel);
-        });
+//        telphoneField.setOnKeyReleased(e -> {
+//            ValidateInputEach.validateMobileNumbers(telphoneField, telphoneLabel);
+//        });
 
-        emailField.setOnKeyReleased(e -> {
+//        emailField.setOnKeyReleased(e -> {
+//
+//            ValidateInputEach.validateEmailWithEmptyAllowed(emailField, emailLabel);
+//
+//        });
 
-            ValidateInputEach.validateEmailWithEmptyAllowed(emailField, emailLabel);
+//        streetAddress.setOnKeyReleased(e -> {
+//            ValidateInputEach.validateInputEmpty(streetAddress, streetAddressLable);
+//        });
 
-        });
+//        addressLine02Field.setOnKeyReleased(e -> {
+//            ValidateInputEach.validateInputEmpty(addressLine02Field, addressLineLabel);
+//        });
 
-        streetAddress.setOnKeyReleased(e -> {
-            ValidateInputEach.validateInputEmpty(streetAddress, streetAddressLable);
-        });
-
-        addressLine02Field.setOnKeyReleased(e -> {
-            ValidateInputEach.validateInputEmpty(addressLine02Field, addressLineLabel);
-        });
-
-        cityField.setOnKeyReleased(e -> {
-            ValidateInputEach.validateInputEmpty(cityField, cityLabel);
-        });
+//        cityField.setOnKeyReleased(e -> {
+//            ValidateInputEach.validateInputEmpty(cityField, cityLabel);
+//        });
     }
 
     @FXML
@@ -516,16 +537,16 @@ public class CustomerController implements Initializable {
 //                & ValidateInputs.validateUserNames(lastNameField, "last Name Field") & ValidateInputs.validateTelphoneNumbers(contactNumField, "Mobile Number Field") ) {
                if (ValidateInputs.validateUserNames(firstNameField, "First Name Field")) {
             try {
-                String fName = firstNameField.getText();
-                String lName = lastNameField.getText();
-                String nic = nicField.getText();
-                String mobNumber = contactNumField.getText();
-                String telNumber = telphoneField.getText();
-                String email = emailField.getText();
-                String strtAddr = streetAddress.getText();
-                String addrLine2 = addressLine02Field.getText();
-                String city = cityField.getText();
-                String compName = companyNameField.getText();
+                String fName = firstNameField.getText() == null ? "" : firstNameField.getText();
+                String lName = lastNameField.getText() == null ? "" : lastNameField.getText();
+                String nic = nicField.getText() == null ? "" : nicField.getText();
+                String mobNumber = contactNumField.getText() == null ? "" : contactNumField.getText();
+                String telNumber = telphoneField.getText() == null ? "" : telphoneField.getText();
+                String email = emailField.getText() == null ? "" : emailField.getText();
+                String strtAddr = emailField.getText() == null ? "" : emailField.getText();
+                String addrLine2 = addressLine02Field.getText() == null ? "" : addressLine02Field.getText();
+                String city = cityField.getText() == null ? "" : cityField.getText();
+                String compName = companyNameField.getText() == null ? "" : companyNameField.getText();
 
                 Customer customer = new Customer();
 
@@ -662,16 +683,16 @@ public class CustomerController implements Initializable {
         if (validateForm()) {
             try {
                 long custId = Long.parseLong(custIdField.getText());
-                String fName = firstNameField.getText();
-                String lName = lastNameField.getText();
-                String nic = nicField.getText();
-                String mobNumber = contactNumField.getText();
-                String telNumber = telphoneField.getText();
-                String email = emailField.getText();
-                String strtAddr = streetAddress.getText();
-                String addrLine2 = addressLine02Field.getText();
-                String city = cityField.getText();
-                String compName = companyNameField.getText();
+                String fName = firstNameField.getText() == null ? "" : firstNameField.getText();
+                String lName = lastNameField.getText() == null ? "" : lastNameField.getText();
+                String nic = nicField.getText() == null ? "" : nicField.getText();
+                String mobNumber = contactNumField.getText() == null ? "" : contactNumField.getText();
+                String telNumber = telphoneField.getText() == null ? "" : telphoneField.getText();
+                String email = emailField.getText() == null ? "" : emailField.getText();
+                String strtAddr = emailField.getText() == null ? "" : emailField.getText();
+                String addrLine2 = addressLine02Field.getText() == null ? "" : addressLine02Field.getText();
+                String city = cityField.getText() == null ? "" : cityField.getText();
+                String compName = companyNameField.getText() == null ? "" : companyNameField.getText();
 
                 Customer customer = new Customer();
 
@@ -679,7 +700,7 @@ public class CustomerController implements Initializable {
                 customer.setAddressLine02(addrLine2);
                 customer.setCompanyName(compName);
                 customer.setCity(city);
-                if (!email.trim().equals("") || !email.equals(null) || !email.isBlank()) {
+                if (!email.trim().equals("") || !email.isBlank()) {
                     customer.setCustomerEmail(email);
                 }
 
@@ -791,8 +812,8 @@ public class CustomerController implements Initializable {
             firstNameField.setText(fName);
             lastNameField.setText(lName);
             nicField.setText(nic);
-            contactNumField.setText("0" + mobNumber);
-            telphoneField.setText("0" + telNumber);
+            contactNumField.setText(mobNumber);
+            telphoneField.setText(telNumber);
             emailField.setText(email);
             streetAddress.setText(strtAddr);
             addressLine02Field.setText(addrLine2);

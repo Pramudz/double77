@@ -442,6 +442,10 @@ public class MainController implements Initializable {
                     if (x.getText().equals("Expenses")) {
                         loadOverheadWindow();
                     }
+                    
+                    if (x.getText().equals("Daily Expenses")) {
+                        loadDailyOverheadWindow();
+                    }
 
                     if (x.getText().equals("Customer Refunds")) {
                         loadCustomerRefundWindow();
@@ -972,6 +976,29 @@ public class MainController implements Initializable {
         otherStagesHidden.setScene(otherScenHidden);
         otherStagesHidden.initModality(Modality.APPLICATION_MODAL);
         otherStagesHidden.setTitle("Monthly Overheads");
+        otherStagesHidden.show();
+        otherStagesHidden.setOnHidden(e -> {
+            otherStagesHidden = null;
+            otherScenHidden = null;
+            otherSetHiddenLoader = null;
+
+        });
+
+        setMenuHideWhenLoadotherScreens();
+
+    }
+    
+       // load daily overhead window
+    private void loadDailyOverheadWindow() throws IOException {
+
+        String loc = "/fxml/overheadDaily.fxml";
+
+        otherSetHiddenLoader = new FXMLLoader(getClass().getResource(loc));
+        otherScenHidden = new Scene(otherSetHiddenLoader.load());
+        otherStagesHidden = new Stage();
+        otherStagesHidden.setScene(otherScenHidden);
+        otherStagesHidden.initModality(Modality.APPLICATION_MODAL);
+        otherStagesHidden.setTitle("Daily Overheads");
         otherStagesHidden.show();
         otherStagesHidden.setOnHidden(e -> {
             otherStagesHidden = null;

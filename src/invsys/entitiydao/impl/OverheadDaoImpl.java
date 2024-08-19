@@ -61,7 +61,7 @@ private static OverheadDaoImpl daoHandler;
 				return true;
 				
 			}catch(Exception e) {
-				AlertHandler.getAlert(AlertType.ERROR, "Cannot Create Category", e.getLocalizedMessage());
+				AlertHandler.getAlert(AlertType.ERROR, "Cannot Create Overhead", e.getLocalizedMessage());
 				session.getTransaction().rollback();
 				e.printStackTrace();
 				return false;

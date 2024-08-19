@@ -466,30 +466,27 @@ public class ValidateInputs {
 	}
 
 	public static boolean validateDobField(DatePicker datePicker , String fieldName) {
-		datePicker.getStyleClass().remove("danger-for-warning");
-		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	           datePicker.getStyleClass().remove("danger-for-warning");
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-			// String regex = "^(1[0-2]|0[1-9])/(3[01]" +
-			// "|[12][0-9]|0[1-9])/[0-9]{4}$";
+                // String regex = "^(1[0-2]|0[1-9])/(3[01]" +
+                // "|[12][0-9]|0[1-9])/[0-9]{4}$";
+                format.setLenient(false);
+                if (format.parse(datePicker.getEditor().getText()).after(Date.valueOf(LocalDate.now().minusYears(18)))) {
+                    AlertHandler.getAlert(AlertType.ERROR, "Employee age should be greater than 18", "Please Enter valid Date to " + fieldName);
+                    datePicker.getStyleClass().add("danger-for-warning");
+                    return false;
+                } else {
+                    return true;
+                }
 
-			format.setLenient(false);
-			if (format.parse(datePicker.getEditor().getText()).after(Date.valueOf(LocalDate.now().minusYears(18)))) {
-				AlertHandler.getAlert(AlertType.ERROR, "Employee age should be greater than 18", "Please Enter valid Date to "+fieldName);
-				datePicker.getStyleClass().add("danger-for-warning");
-				return false;
-			} else {
-				return true;
-			}
-
-		} catch (
-
-		Exception e) {
-			AlertHandler.getAlert(AlertType.ERROR, "Date Validation Error",
-					"pls Enter Valid Date Type Like 25-12-2018 to "+fieldName);
-			datePicker.getStyleClass().add("danger-for-warning");
-			return false;
-		}
+            } catch (Exception e) {
+                AlertHandler.getAlert(AlertType.ERROR, "Date Validation Error",
+                        "pls Enter Valid Date Type Like 25-12-2018 to " + fieldName);
+                datePicker.getStyleClass().add("danger-for-warning");
+                return false;
+            }
 	}
 	
 	

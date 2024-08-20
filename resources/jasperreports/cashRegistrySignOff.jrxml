@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cashRegistrySignOff" pageWidth="612" pageHeight="396" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb16e889-a1fc-4412-bc2d-b74f7d5b2ff5">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -17,11 +17,11 @@
 	<parameter name="registryDate" class="java.sql.Date"/>
 	<parameter name="companyName" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[ select p.pay_mode, p.sub_pay_mode, sum(cusref.net_refund_amount) as samedayposrefund, (select sum(alref.net_refund_amount) from customer_refunds alref where alref.refund_date=$P{registryDate}) as allrefund,
+		<![CDATA[select p.pay_mode, p.sub_pay_mode, ifnull(sum(cusref.net_refund_amount),0) as samedayposrefund, (select ifnull(sum(alref.net_refund_amount),0) from customer_refunds alref where alref.refund_date=$P{registryDate}) as allrefund,
 case when p.pay_mode = 'cash' then sum(p.amount-s.balance) else sum(p.amount) end as value, c.opening_cash_balance, c.closingCashBalance, c.user_name ,c.registry_date 
 from pos_pay_detail p inner join sales s on 
 s.sales_date=p.sales_date and s.user_id=p.user_id and s.bill_no=p.bill_no 
-inner join cash_register c on c.user_id=s.user_id and c.registry_date = p.sales_date inner join customer_refunds cusref on cusref.bill_no=s.bill_no and cusref.user_id=s.user_id and cusref.sales_date=s.sales_date
+inner join cash_register c on c.user_id=s.user_id and c.registry_date = p.sales_date left join customer_refunds cusref on cusref.bill_no=s.bill_no and cusref.user_id=s.user_id and cusref.sales_date=s.sales_date
 where s.cancel_status=false and p.sales_date =$P{registryDate}  and p.user_id=$P{userId} group by p.sub_pay_mode]]>
 	</queryString>
 	<field name="pay_mode" class="java.lang.String">

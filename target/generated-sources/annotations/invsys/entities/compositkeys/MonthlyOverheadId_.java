@@ -1,7 +1,6 @@
 package invsys.entities.compositkeys;
 
 import invsys.entities.OverheadCategory;
-import java.time.Month;
 import javax.annotation.processing.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -10,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(MonthlyOverheadId.class)
 public abstract class MonthlyOverheadId_ {
 
-	public static volatile SingularAttribute<MonthlyOverheadId, Month> month;
+	public static volatile SingularAttribute<MonthlyOverheadId, Integer> month;
 	public static volatile SingularAttribute<MonthlyOverheadId, Short> year;
 	public static volatile SingularAttribute<MonthlyOverheadId, OverheadCategory> overheadCategory;
 

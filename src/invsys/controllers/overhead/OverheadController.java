@@ -174,7 +174,7 @@ public class OverheadController implements Initializable{
 	    			
 	    			}else {
 	    				MonthlyOverheadId monthlyOverheadId = new MonthlyOverheadId();
-	    				monthlyOverheadId.setMonth(month);
+	    				monthlyOverheadId.setMonth(month.getValue());
 	    				monthlyOverheadId.setOverheadCategory(overHeadCat);
 	    				monthlyOverheadId.setYear(year);
 	    				
@@ -226,7 +226,7 @@ public class OverheadController implements Initializable{
 	    			
 	    			}else {
 	    				MonthlyOverheadId monthlyOverheadId = new MonthlyOverheadId();
-	    				monthlyOverheadId.setMonth(month);
+	    				monthlyOverheadId.setMonth(month.getValue());
 	    				monthlyOverheadId.setOverheadCategory(overHeadCat);
 	    				monthlyOverheadId.setYear(year);
 	    				
@@ -265,7 +265,7 @@ public class OverheadController implements Initializable{
 	    			OverheadCategory overHeadCat = overheadDao.getOverheadCategoryByName(overheadName);
 	    			
 	    			MonthlyOverheadId monthlyOverheadId = new MonthlyOverheadId();
-	    			monthlyOverheadId.setMonth(month);
+	    			monthlyOverheadId.setMonth(month.getValue());
 	    			monthlyOverheadId.setOverheadCategory(overHeadCat);
 	    			monthlyOverheadId.setYear(year);
 	    			

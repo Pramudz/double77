@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -22,12 +23,17 @@ import invsys.controllers.formvalidation.AlertHandler;
 import invsys.controllers.formvalidation.ValidateInputEach;
 import invsys.controllers.formvalidation.ValidateInputs;
 import invsys.controllers.purchaseorder.GetSupplierController;
+import invsys.entities.Customer;
 import invsys.entities.Supplier;
 import invsys.entities.SupplierBrImages;
 import invsys.entitiydao.SupplierDao;
 import invsys.entitiydao.impl.SupplierDaoImpl;
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +54,9 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -178,6 +186,19 @@ public class SupplierMaintananceController implements Initializable {
 	//DAO handlers- Interfaces
 	SupplierDao supplierDao = null;
 	
+	//update 20th Aug 2024 Tableview for suppliers
+	@FXML
+    private JFXButton buttonTableDrawer;
+	@FXML
+    private VBox tableDrawerVBox;
+	@FXML
+	private Pane supRegDetPane;
+	//
+	
+	//
+	ObservableList<Supplier> listofSupplier = FXCollections.observableArrayList();
+	private FilteredList<Supplier> filteredDataList = new FilteredList<>(listofSupplier, e -> true);
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// DBHandler.getInstance();
@@ -192,6 +213,7 @@ public class SupplierMaintananceController implements Initializable {
 		addImageButton.setDisable(true);
 		removeImages();
 		validateEachField();
+		getTableDrawer();
 
 	}
 
@@ -199,7 +221,7 @@ public class SupplierMaintananceController implements Initializable {
 		supCodeCol.setCellValueFactory(new PropertyValueFactory<>("sup_id"));
 		supNameCol.setCellValueFactory(new PropertyValueFactory<>("com_name"));
 		cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
-		addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+		addressCol.setCellValueFactory(new PropertyValueFactory<>("contact_fname"));
 		phoneCol.setCellValueFactory(new PropertyValueFactory<>("mobile_no"));
 		supCreateDateCol.setCellValueFactory(new PropertyValueFactory<>("payment_period"));
 
@@ -418,7 +440,7 @@ public class SupplierMaintananceController implements Initializable {
 		clearDataClickedForCreateNew();
 		removeTextFieldCss();
 		addTextFieldCss();
-
+		
 		textFieldEditable();
 		actionButton.setText("SaveNew");
 		updateActionButton.setVisible(false);
@@ -450,24 +472,98 @@ public class SupplierMaintananceController implements Initializable {
 
 	}
 
-	ObservableList<Supplier> listofSupplier = FXCollections.observableArrayList();
+	
 
 	@FXML
 	void loadSuppllierButton(ActionEvent event) {
-		if (listofSupplier.isEmpty()) {
-			listofSupplier.addAll(SupplierDaoImpl.getDao().getSuppliers());
-		}
-
+		listofSupplier.clear();
+		listofSupplier.addAll(supplierDao.getSuppliers());
 		supplierTableView.setItems(listofSupplier);
 	}
+	
+	
+	//table drawer method for getting hidden tablview view to the current scene
+    private void getTableDrawer() {
+
+        TranslateTransition openNav = new TranslateTransition(new Duration(350), tableDrawerVBox);
+        openNav.setToX(0);
+
+        TranslateTransition closeNav = new TranslateTransition(new Duration(350), tableDrawerVBox);
+        buttonTableDrawer.setOnAction(e -> {
+            if (tableDrawerVBox.getTranslateX() != 0) {
+                tableDrawerVBox.setVisible(true);
+                buttonTableDrawer.setText("Close Table");
+                supRegDetPane.setVisible(false);
+                openNav.play();
+               
+                /*
+				 * buttonTableDrawer.getStyleClass().remove("hamburger-button");
+				 * buttonTableDrawer.getStyleClass().add("open-menu");
+                 */
+
+            } else {
+
+                closeNav.setToX(610);
+                closeNav.play();
+                /*
+				 * buttonTableDrawer.getStyleClass().remove("open-menu");
+				 * buttonTableDrawer.getStyleClass().add("hamburger-button");
+                 */
+                
+                PauseTransition visiblePause = new PauseTransition(
+                        Duration.millis(350)
+                );
+                visiblePause.setOnFinished(
+                        event -> {
+                        	tableDrawerVBox.setVisible(false);
+                            buttonTableDrawer.setText("Open Table");
+                            supRegDetPane.setVisible(true);
+                        }
+                );
+                visiblePause.play();
+                
+            }
+        });
+    }
 
 	@FXML
 	void qtyCellClicke(ActionEvent event) {
 
 	}
 
+	//Modified on 20th August 2024 for search on Supplier table
 	@FXML
 	void searchItems(KeyEvent event) {
+		thisSearchTextField.textProperty().addListener((ObservableValue, oldValue, newValue) -> {
+            filteredDataList.setPredicate((Predicate<? super Supplier>) supplier -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (String.valueOf(supplier.getCom_name()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                if (supplier.getContact_fname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                if (supplier.getBrNumber() != null) {
+                    if (supplier.getBrNumber().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                }
+                if (String.valueOf(supplier.getMobile_no()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+
+                return false;
+            });
+        });
+
+        SortedList<Supplier> sList = new SortedList<>(filteredDataList);
+
+        sList.comparatorProperty().bind(supplierTableView.comparatorProperty());
+
+        supplierTableView.setItems(sList);
 
 	}
 

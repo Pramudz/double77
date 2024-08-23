@@ -891,7 +891,10 @@ public class GoodReceivedController implements Initializable {
 		// Added on 13th May 2023 to Load All GRN data to table view at once and save at once
 		// because of the client request
 		 public void loadAllOrder() {
-			 try {	
+			 try {
+				 if(!grnTableDetailList.isEmpty()) {
+					 grnTableDetailList.clear();
+				 }
 				 for (OrderItems getMe : purchaseOrderDetailList) {
 
 					 	GoodReceivedDetails grn = new GoodReceivedDetails();

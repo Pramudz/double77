@@ -168,11 +168,11 @@
                                     <Label prefHeight="27.0" prefWidth="99.0" text="Last Name*" textAlignment="CENTER" GridPane.rowIndex="2" />
                                     <Label prefHeight="27.0" prefWidth="83.0" text="Mobile Num:*" textAlignment="CENTER" GridPane.rowIndex="6" />
                                     <Label prefHeight="27.0" prefWidth="83.0" text="Vehicle Type:" textAlignment="CENTER" GridPane.rowIndex="5" />
-                                    <Label prefHeight="27.0" prefWidth="118.0" text="NIC No :*" textAlignment="CENTER" GridPane.rowIndex="3" />
-                                    <Label prefHeight="27.0" prefWidth="83.0" text="Email if Any :" textAlignment="CENTER" GridPane.rowIndex="7" />
-                                    <Label prefHeight="27.0" prefWidth="83.0" text="Street Address*:" textAlignment="CENTER" GridPane.rowIndex="8" />
-                                    <Label prefHeight="27.0" prefWidth="95.0" text="Address Line 02*" textAlignment="CENTER" GridPane.rowIndex="9" />
-                                    <Label prefHeight="27.0" prefWidth="83.0" text="City*" textAlignment="CENTER" GridPane.rowIndex="10" />
+                                    <Label prefHeight="27.0" prefWidth="118.0" text="NIC No :*" textAlignment="CENTER" visible="false" GridPane.rowIndex="3" />
+                                    <Label prefHeight="27.0" prefWidth="83.0" text="Email if Any :" textAlignment="CENTER" visible="false" GridPane.rowIndex="7" />
+                                    <Label prefHeight="27.0" prefWidth="83.0" text="Street Address*:" textAlignment="CENTER" visible="false" GridPane.rowIndex="8" />
+                                    <Label prefHeight="27.0" prefWidth="95.0" text="Address Line 02*" textAlignment="CENTER" visible="false" GridPane.rowIndex="9" />
+                                    <Label prefHeight="27.0" prefWidth="83.0" text="City*" textAlignment="CENTER" visible="false" GridPane.rowIndex="10" />
                                     <Label fx:id="fnameLabel" prefHeight="30.0" prefWidth="241.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <Label fx:id="lnameLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     <Label fx:id="nicLabel" prefHeight="30.0" prefWidth="250.0" textFill="#dd0707" GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -193,7 +193,7 @@
                   </VBox>
                   <VBox minWidth="-Infinity" prefHeight="518.0" prefWidth="164.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <VBox fx:id="tableDrawerVBox" prefHeight="546.0" prefWidth="528.0" translateX="610.0" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="tableDrawerVBox" prefHeight="546.0" prefWidth="528.0" translateX="610.0" visible="false" VBox.vgrow="ALWAYS">
                            <children>
                               <VBox alignment="CENTER" prefHeight="36.0" prefWidth="508.0">
                                  <VBox.margin>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="profit_and_loss" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34c3a38e-8c2a-4c14-81e0-3fc9656931a0">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="269"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="724"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -133,14 +135,25 @@ category mcat on mcat.cat_id=cat.main_category where cat.main_category is not nu
 	</subDataset>
 	<subDataset name="Dataset2" uuid="c3cb0352-f653-4535-a62f-411f2dec23e6">
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="201"/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="792"/>
 		<parameter name="toMonth" class="java.lang.Integer"/>
 		<parameter name="fromYear" class="java.lang.Integer"/>
 		<parameter name="toYear" class="java.lang.Integer"/>
 		<parameter name="fromMonth" class="java.lang.Integer"/>
 		<queryString language="SQL">
-			<![CDATA[select oc.overhead_category, sum(amount) as expenseamount from  overhead_category oc inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
-where month between   $P{fromMonth}  and   $P{toMonth}  and year between $P{fromYear}  and  $P{toYear}    group by oc.overhead_category;]]>
+			<![CDATA[select overhead_category, sum(expenseamount) as expenseamount 
+from (select oc.overhead_category overhead_category , sum(amount) as expenseamount from  
+overhead_category oc 
+inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
+where month between  $P{fromMonth} and   $P{fromMonth}  and year between $P{fromYear}  and  $P{fromYear}    group by oc.overhead_category
+union all
+select oc.overhead_category, sum(amount) as expenseamount from  
+overhead_category oc 
+inner join daily_overhead da on oc.overhead_category_id=da.overhead_category_id
+where month(da.date_of_entry) between  $P{fromMonth}  and   $P{fromMonth}  and year(da.date_of_entry) between $P{fromYear} and  $P{fromYear}    group by oc.overhead_category)x
+group by overhead_category]]>
 		</queryString>
 		<field name="overhead_category" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.name" value="overhead_category"/>
@@ -169,8 +182,18 @@ where month between   $P{fromMonth}  and   $P{toMonth}  and year between $P{from
 	<parameter name="toYear" class="java.lang.Integer"/>
 	<parameter name="printedBy" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from ((select sum(amount) as expenseamount from  overhead_category oc inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
-where month between   $P{fromMonth}  and $P{toMonth}   and year between   $P{fromYear} and  $P{toYear} ) as i ,
+		<![CDATA[select * from (
+(select sum(expenseamount) as expenseamount 
+from (select sum(amount) as expenseamount from  
+overhead_category oc 
+inner join monthly_overheads mo on oc.overhead_category_id=mo.overhead_category_id
+where month between  $P{fromMonth} and   $P{fromMonth}  and year between $P{fromYear}  and  $P{fromYear}
+union all
+select sum(amount) as expenseamount from  
+overhead_category oc 
+inner join daily_overhead da on oc.overhead_category_id=da.overhead_category_id
+where month(da.date_of_entry) between  $P{fromMonth}  and   $P{fromMonth}  and year(da.date_of_entry) between $P{fromYear} and  $P{fromYear}) as i) as x ,
+
 (select sum(withoutTaxSale-costOfSales) as grossprofit from
 ((select sal.sales_date as tdate, cat.cat_name as subcatname , mcat.cat_name as maincatname,
 round((sum(sal.item_net_amount/((100+sal.item_vat)/100))),2) as withoutTaxSale,

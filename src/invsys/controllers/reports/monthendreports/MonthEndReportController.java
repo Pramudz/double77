@@ -214,8 +214,8 @@ public class MonthEndReportController {
 
 					// since month is enamurated in Hibernate as all months are selected this is the
 					// easy ways to get 12 days
-					int i = 0;
-					for (i = 0; i < 12; i++) {
+					
+					for (int i = 1; i <= 12; i++) {
 						listOfMonths.add(i);
 					}
 
@@ -223,8 +223,8 @@ public class MonthEndReportController {
 				// check not contains all in overhead category - selected but all months
 				if (monthCombo.getCheckModel().getCheckedItems().contains("All")
 						&& !overheadCatCombo.getCheckModel().getCheckedItems().contains("All")) {
-					int i = 0;
-					for (i = 0; i < 12; i++) {
+					
+					for (int i = 1; i <= 12; i++) {
 						listOfMonths.add(i);
 					}
 
@@ -242,7 +242,7 @@ public class MonthEndReportController {
 						Month month = Month.valueOf(x);
 
 						// get integer value of the month from the Month instance
-						int imonth = month.getValue() - 1;
+						int imonth = month.getValue();
 
 						listOfMonths.add(imonth);
 
@@ -261,7 +261,7 @@ public class MonthEndReportController {
 						Month month = Month.valueOf(x);
 
 						// get integer value of the month from the Month instance
-						int imonth = month.getValue() - 1;
+						int imonth = month.getValue();
 
 						listOfMonths.add(imonth);
 
@@ -291,12 +291,12 @@ public class MonthEndReportController {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fromdate);
 				
-				int fromMonth = cal.get(Calendar.MONTH);
+				int fromMonth = cal.get(Calendar.MONTH)+1;
 				int fromYear = cal.get(Calendar.YEAR);
 				
 				cal.setTime(toDate);
 				
-				int toMonth = cal.get(Calendar.MONTH);
+				int toMonth = cal.get(Calendar.MONTH)+1;
 				int toYear = cal.get(Calendar.YEAR);
 				
 				

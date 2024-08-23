@@ -25,8 +25,7 @@ public class MonthlyOverheadId implements Serializable {
 	private short year;
 
 	@Column(name = "month", columnDefinition = "smallint")
-	@Enumerated
-	private Month month;
+	private int month;
 
 	public MonthlyOverheadId() {
 		
@@ -48,11 +47,11 @@ public class MonthlyOverheadId implements Serializable {
 		this.year = year;
 	}
 
-	public Month getMonth() {
+	public int getMonth() {
 		return month;
 	}
 
-	public void setMonth(Month month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
 	

@@ -1,5 +1,7 @@
 package invsys.entitiydao.impl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -86,11 +88,12 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 			Root<PurchaseOrder> root = criteriaQuery.from(PurchaseOrder.class);
 			root.fetch("supplier", JoinType.INNER);
 			root.fetch("approvedBy",JoinType.INNER);
-			
-			Predicate[] predict = new Predicate[3];
+			java.sql.Date todayDate = java.sql.Date.valueOf(LocalDate.now());
+			Predicate[] predict = new Predicate[4];
 			predict[0] = builder.isNotNull(root.get("approvedBy"));
 			predict[1] = builder.notEqual(root.get("deliverStatus"), true);
 			predict[2] = builder.isNull(root.get("deletedBy"));
+			predict[3] = builder.greaterThanOrEqualTo(root.get("expireDate"), todayDate);
 			criteriaQuery.select(root).where(predict);
 			temporyList = session.createQuery(criteriaQuery).getResultList();
 			session.getTransaction().commit();

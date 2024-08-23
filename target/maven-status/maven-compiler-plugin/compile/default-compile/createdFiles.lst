@@ -116,6 +116,7 @@ invsys\entities\PurchaseOrder.class
 invsys\entities\PayModes_.class
 invsys\entities\compositkeys\SalesId_.class
 invsys\controllers\company\CompanyInfoTest.class
+invsys\entities\DailyOverhead_.class
 invsys\controllers\billingwindow\POS$POSPrinter$FontSelect.class
 invsys\controllers\salesrefund\SalesRefundController.class
 invsys\entitiydao\RoleDao.class
@@ -193,6 +194,7 @@ invsys\controllers\formvalidation\AlertHandler.class
 invsys\entities\Company_.class
 invsys\entities\OverheadCategory_.class
 invsys\controllers\formvalidation\DialogHandler$1.class
+invsys\entities\compositkeys\DailyOverheadId_.class
 invsys\entities\CreditInvoiceVoid_.class
 invsys\controllers\usermaintain\UserTableController.class
 invsys\entities\SupplierPaymentDetail.class

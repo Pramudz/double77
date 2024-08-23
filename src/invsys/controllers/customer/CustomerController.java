@@ -18,6 +18,7 @@ import invsys.controllers.formvalidation.ValidateInputs;
 import invsys.entities.Customer;
 import invsys.entitiydao.CustomerDao;
 import invsys.entitiydao.impl.CustomerDaoImpl;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -361,8 +362,17 @@ public class CustomerController implements Initializable {
 				 * buttonTableDrawer.getStyleClass().remove("open-menu");
 				 * buttonTableDrawer.getStyleClass().add("hamburger-button");
                  */
-                tableDrawerVBox.setVisible(false);
-                buttonTableDrawer.setText("Open Table");
+                PauseTransition visiblePause = new PauseTransition(
+                        Duration.millis(350)
+                );
+                visiblePause.setOnFinished(
+                        event -> {
+                        	tableDrawerVBox.setVisible(false);
+                            buttonTableDrawer.setText("Open Table");
+                        }
+                );
+                visiblePause.play();
+                
             }
         });
     }

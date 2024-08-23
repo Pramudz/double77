@@ -76,7 +76,7 @@
                                  <children>
                                     <JFXButton onAction="#createNewButton" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Create New" />
                                     <JFXButton onAction="#updateButton" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Update" />
-                                    <JFXButton prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Open Table" visible="false" />
+                                    <JFXButton fx:id="buttonTableDrawer" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Open Table" />
                                     <JFXButton onAction="#deleteButton" prefHeight="61.0" prefWidth="132.0" styleClass="menu-buttons-selected" text="Delete" visible="false" />
                                  </children>
                               </HBox>
@@ -84,7 +84,7 @@
                         </VBox>
                         <VBox alignment="TOP_RIGHT" prefHeight="37.0" prefWidth="556.0">
                            <children>
-                              <JFXButton onAction="#loadSuppllierButton" prefHeight="40.0" prefWidth="151.0" styleClass="menu-buttons-selected" text="Load Supplier Table" visible="false" />
+                              <JFXButton onAction="#loadSuppllierButton" prefHeight="40.0" prefWidth="151.0" styleClass="menu-buttons-selected" text="Load Supplier Table" />
                            </children>
                            <VBox.margin>
                               <Insets right="10.0" />
@@ -212,27 +212,31 @@
                            <children>
                               <Pane prefHeight="443.0" prefWidth="604.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="345.0" prefWidth="604.0" translateX="610.0" visible="false">
+                                    <VBox fx:id="tableDrawerVBox" alignment="CENTER" prefHeight="345.0" prefWidth="614.0" translateX="610.0" visible="false">
                                        <children>
-                                          <JFXTextField fx:id="thisSearchTextField" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchItems" prefHeight="30.0" prefWidth="503.0" promptText="Search Supplier" styleClass="set-not-editable-text">
+                                          <JFXTextField fx:id="thisSearchTextField" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#searchItems" prefHeight="27.0" prefWidth="614.0" promptText="Search Supplier" styleClass="itext-field">
                                              <padding>
                                                 <Insets right="10.0" top="10.0" />
                                              </padding>
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
                                           </JFXTextField>
-                                          <TableView fx:id="supplierTableView" onKeyReleased="#keyEventHandling" prefHeight="104.0" prefWidth="579.0" VBox.vgrow="ALWAYS">
+                                          <TableView fx:id="supplierTableView" onKeyReleased="#keyEventHandling" prefHeight="315.0" prefWidth="590.0" VBox.vgrow="ALWAYS">
                                              <columns>
                                                 <TableColumn fx:id="supCodeCol" prefWidth="69.0" text="Supcode" />
-                                                <TableColumn fx:id="supNameCol" prefWidth="171.0" text="Supplier Name" />
+                                                <TableColumn fx:id="supNameCol" prefWidth="171.0" text="Company Name" />
                                                 <TableColumn fx:id="cityCol" onEditCommit="#qtyCellClicke" prefWidth="89.0" text="City" />
-                                                <TableColumn fx:id="addressCol" prefWidth="111.0" text="Address" />
+                                                <TableColumn fx:id="addressCol" prefWidth="111.0" text="Contact Person" />
                                                 <TableColumn fx:id="phoneCol" prefWidth="79.0" text="Phone" />
-                                                <TableColumn fx:id="supCreateDateCol" prefWidth="74.0" text="Create Date" />
+                                                <TableColumn fx:id="supCreateDateCol" prefWidth="94.0" text="Payment Period" />
                                              </columns>
                                           </TableView>
                                        </children>
                                     </VBox>
-                                    <Pane layoutX="3.0" prefHeight="365.0" prefWidth="585.0">
+                                    <Pane fx:id="supRegDetPane" layoutX="3.0" prefHeight="365.0" prefWidth="585.0">
                                        <children>
+                                          <Label prefHeight="27.0" prefWidth="203.0" text="Supplier Registration Details" textAlignment="CENTER" />
                                           <Separator layoutY="34.0" prefHeight="5.0" prefWidth="572.0" />
                                           <Separator layoutY="178.0" prefHeight="5.0" prefWidth="572.0" />
                                           <GridPane layoutX="29.0" layoutY="67.0" prefHeight="87.0" prefWidth="340.0">
@@ -258,7 +262,6 @@
                                           <HBox fx:id="fileChooserHbox" layoutX="5.0" layoutY="183.0" prefHeight="183.0" prefWidth="585.0" />
                                        </children>
                                     </Pane>
-                                    <Label layoutX="20.0" layoutY="8.0" prefHeight="27.0" prefWidth="203.0" text="Supplier Registration Details" textAlignment="CENTER" />
                                     <ImageView fx:id="recycleBinImageView" fitHeight="72.0" fitWidth="69.0" layoutX="529.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../images/Full_Recycle_Bin.png" />
